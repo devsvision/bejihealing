@@ -1,0 +1,33 @@
+<header class="relative z-40 px-3 py-3">
+  <nav class="container-lux px-4 py-3">
+    <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+      <a href="#/home" data-route="home" class="flex items-center justify-self-start">
+        <img src="./assets/images/beji-healing-logo.png" alt="Beji Healing" class="h-11 w-auto sm:h-12 lg:h-[60px]" />
+      </a>
+      <div class="hidden items-center justify-center gap-1 justify-self-center lg:flex">
+        <a class="route-link rounded-full border border-transparent px-4 py-2 text-xs font-semibold tracking-[.16em] text-white/70" href="#/home" data-route="home">HOME</a>
+        <a class="route-link rounded-full border border-transparent px-4 py-2 text-xs font-semibold tracking-[.16em] text-white/70" href="#/programs" data-route="programs">SERVICES</a>
+        <a class="route-link rounded-full border border-transparent px-4 py-2 text-xs font-semibold tracking-[.16em] text-white/70" href="#/healers" data-route="healers">HEALERS</a>
+        <a class="route-link rounded-full border border-transparent px-4 py-2 text-xs font-semibold tracking-[.16em] text-white/70" href="#/gallery" data-route="gallery">GALLERY</a>
+        <a class="route-link rounded-full border border-transparent px-4 py-2 text-xs font-semibold tracking-[.16em] text-white/70" href="#/about" data-route="about">ABOUT US</a>
+      </div>
+      <div class="flex items-center justify-end gap-2 justify-self-end">
+        <a href="#/booking" data-route="booking" class="luxury-button hidden !min-h-11 !px-5 text-xs tracking-[.14em] sm:inline-flex">
+          <span>BOOK NOW</span>
+          <span aria-hidden="true" class="text-lg leading-none">-&gt;</span>
+        </a>
+        <button class="ghost-button !min-h-10 !px-3 lg:hidden" onclick="document.querySelector('#mobile-menu').classList.toggle('hidden')" aria-label="Open navigation">Menu</button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden border-t border-white/10 pt-3 mt-3 lg:hidden">
+      <div class="grid gap-2">
+        <a class="route-link rounded-2xl px-4 py-3 text-white/70" href="#/home" data-route="home">HOME</a>
+        <a class="route-link rounded-2xl px-4 py-3 text-white/70" href="#/programs" data-route="programs">SERVICES</a>
+        <a class="route-link rounded-2xl px-4 py-3 text-white/70" href="#/healers" data-route="healers">HEALERS</a>
+        <a class="route-link rounded-2xl px-4 py-3 text-white/70" href="#/gallery" data-route="gallery">GALLERY</a>
+        <a class="route-link rounded-2xl px-4 py-3 text-white/70" href="#/about" data-route="about">ABOUT US</a>
+        <a class="luxury-button mt-2 w-full" href="#/booking" data-route="booking">BOOK NOW <span aria-hidden="true">-&gt;</span></a>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,173 @@
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes pulseSoft {
+  0%, 100% { opacity: .56; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes auroraDrift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: .36; }
+  50% { transform: translate3d(-2rem, 1.4rem, 0) scale(1.08); opacity: .52; }
+}
+
+@keyframes leafSwayLeft {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-1deg); }
+  50% { transform: translate3d(-.8rem, .5rem, 0) rotate(2deg); }
+}
+
+@keyframes leafSwayRight {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(1deg); }
+  50% { transform: translate3d(.8rem, .5rem, 0) rotate(-2deg); }
+}
+
+@keyframes waterPulse {
+  0%, 100% { transform: scale(1); opacity: .42; }
+  50% { transform: scale(1.055); opacity: .78; }
+}
+
+@keyframes auraBreath {
+  0%, 100% { stroke-dashoffset: 0; opacity: .35; }
+  50% { stroke-dashoffset: 34; opacity: .9; }
+}
+
+@keyframes particleFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(.8); opacity: .22; }
+  50% { transform: translate3d(1.2rem, -2rem, 0) scale(1.25); opacity: .75; }
+}
+
+@keyframes emblemShine {
+  0%, 18% { transform: translateX(-130%) rotate(18deg); opacity: 0; }
+  30% { opacity: .9; }
+  52% { transform: translateX(130%) rotate(18deg); opacity: 0; }
+  100% { transform: translateX(130%) rotate(18deg); opacity: 0; }
+}
+
+@keyframes counterCardShine {
+  0%, 35% { transform: translateX(-120%); opacity: 0; }
+  48% { opacity: .75; }
+  66% { transform: translateX(120%); opacity: 0; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+@keyframes ritualBorderOrbit {
+  from { --border-angle: 0deg; }
+  to { --border-angle: 360deg; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+}
+
+.reveal.is-visible {
+  animation: fadeUp .75s ease both;
+}
+
+.gold-glow {
+  box-shadow: 0 0 40px rgba(212,175,55,.25);
+}
+
+.soft-pulse-light {
+  animation: pulseSoft 4.5s ease-in-out infinite;
+}
+
+.animated-blur {
+  position: absolute;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 999px;
+  filter: blur(74px);
+  opacity: .42;
+  background: conic-gradient(from 120deg, rgba(212,175,55,.56), rgba(31,107,82,.58), rgba(255,255,255,.07), rgba(212,175,55,.5));
+  animation: slowSpin 22s linear infinite, auroraDrift 9s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.shimmer-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.16) 45%, transparent 70%);
+  background-size: 220% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.parallax-slow {
+  will-change: transform;
+}
+
+.hero-leaves {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.hero-leaves-left {
+  animation: leafSwayLeft 8s ease-in-out infinite;
+}
+
+.hero-leaves-right {
+  animation: leafSwayRight 9s ease-in-out infinite;
+}
+
+.hero-spa-center {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: float 8s ease-in-out infinite;
+}
+
+.hero-water-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: waterPulse 4.8s ease-in-out infinite;
+}
+
+.hero-water-ring.ring-delay {
+  animation-delay: 1.2s;
+}
+
+.hero-aura-line {
+  stroke-dasharray: 18 18;
+  animation: auraBreath 6s ease-in-out infinite;
+}
+
+.hero-aura-line.aura-delay {
+  animation-delay: 1.7s;
+}
+
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  background: #050505;
+  transition: opacity .45s ease, visibility .45s ease;
+}
+
+#loading-screen.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}

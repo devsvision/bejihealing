@@ -1,0 +1,7 @@
+[
+  { "id": "BKG-1024", "guest": "Maya Santoso", "program": "Forest Reset Immersion", "date": "2026-05-22", "guests": 2, "status": "paid", "amount": 8400000 },
+  { "id": "BKG-1025", "guest": "Elena Brooks", "program": "Golden Silence Retreat", "date": "2026-05-23", "guests": 1, "status": "confirmed", "amount": 7600000 },
+  { "id": "BKG-1026", "guest": "Rafi Pradana", "program": "Moon Bath Ceremony", "date": "2026-05-24", "guests": 4, "status": "pending", "amount": 7400000 },
+  { "id": "BKG-1027", "guest": "Aiko Tan", "program": "Forest Reset Immersion", "date": "2026-05-25", "guests": 2, "status": "completed", "amount": 8400000 },
+  { "id": "BKG-1028", "guest": "Noah Wilson", "program": "Golden Silence Retreat", "date": "2026-05-27", "guests": 1, "status": "cancelled", "amount": 7600000 }
+]

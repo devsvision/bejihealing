@@ -1,0 +1,13 @@
+{
+  "name": "beji-healing-retreat",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 3000",
+    "start": "python -m http.server 3000"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

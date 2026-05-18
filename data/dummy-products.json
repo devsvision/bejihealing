@@ -1,0 +1,8 @@
+[
+  { "id": "tea", "name": "Sacred Leaf Tea", "category": "Beverage", "price": 85000, "stock": 42, "icon": "T" },
+  { "id": "oil", "name": "Temple Calm Oil", "category": "Apothecary", "price": 220000, "stock": 18, "icon": "O" },
+  { "id": "wrap", "name": "Organic Linen Wrap", "category": "Boutique", "price": 580000, "stock": 11, "icon": "L" },
+  { "id": "sound", "name": "Sound Bath Add-on", "category": "Experience", "price": 450000, "stock": 99, "icon": "S" },
+  { "id": "meal", "name": "Sattvic Lunch", "category": "Dining", "price": 175000, "stock": 30, "icon": "M" },
+  { "id": "journal", "name": "Reflection Journal", "category": "Boutique", "price": 145000, "stock": 24, "icon": "J" }
+]

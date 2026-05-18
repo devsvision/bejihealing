@@ -1,0 +1,108 @@
+.dashboard-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+}
+
+.dashboard-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 1rem;
+  border-right: 1px solid rgba(255,255,255,.08);
+  background: rgba(5,5,5,.66);
+  backdrop-filter: blur(26px);
+}
+
+.side-link {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  padding: .85rem 1rem;
+  color: rgba(245,245,245,.68);
+}
+
+.side-link:hover {
+  color: #f5f5f5;
+  border-color: rgba(31,107,82,.45);
+  background: rgba(31,107,82,.16);
+}
+
+.dash-main {
+  min-width: 0;
+  padding: 1rem;
+}
+
+.dash-topbar {
+  position: sticky;
+  top: .75rem;
+  z-index: 30;
+  border-radius: 1.35rem;
+  padding: .8rem;
+}
+
+.stat-card {
+  border-radius: 1.4rem;
+  padding: 1.2rem;
+  min-height: 9rem;
+}
+
+.lux-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 .7rem;
+}
+
+.lux-table th {
+  color: rgba(245,245,245,.48);
+  font-size: .72rem;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  padding: 0 .9rem;
+}
+
+.lux-table td {
+  background: rgba(255,255,255,.045);
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding: .95rem .9rem;
+}
+
+.lux-table td:first-child {
+  border-left: 1px solid rgba(255,255,255,.08);
+  border-radius: 1rem 0 0 1rem;
+}
+
+.lux-table td:last-child {
+  border-right: 1px solid rgba(255,255,255,.08);
+  border-radius: 0 1rem 1rem 0;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: .28rem .7rem;
+  font-size: .76rem;
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.status-paid,
+.status-confirmed,
+.status-completed {
+  color: #84f0bc;
+  background: rgba(31,107,82,.22);
+}
+
+.status-pending {
+  color: #f4d873;
+  background: rgba(212,175,55,.12);
+}
+
+.status-cancelled {
+  color: #ffaaa7;
+  background: rgba(239,68,68,.12);
+}

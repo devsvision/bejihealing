@@ -1,0 +1,95 @@
+<section class="hero-animated-scene relative -mt-24 min-h-[92vh] overflow-hidden pt-28" data-hero-light>
+  <div class="hero-mouse-light" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-gold" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-green" aria-hidden="true"></div>
+  <div class="hero-particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <svg class="hero-bali-art" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="leafGradient" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stop-color="#2e9b6d" />
+        <stop offset="48%" stop-color="#0f3d2e" />
+        <stop offset="100%" stop-color="#071b15" />
+      </linearGradient>
+      <linearGradient id="goldStroke" x1="0" x2="1">
+        <stop offset="0%" stop-color="#7d5e18" />
+        <stop offset="45%" stop-color="#f2d675" />
+        <stop offset="100%" stop-color="#d4af37" />
+      </linearGradient>
+      <radialGradient id="waterGlow" cx="50%" cy="46%" r="56%">
+        <stop offset="0%" stop-color="#1f6b52" stop-opacity=".82" />
+        <stop offset="52%" stop-color="#0f3d2e" stop-opacity=".38" />
+        <stop offset="100%" stop-color="#050505" stop-opacity="0" />
+      </radialGradient>
+      <filter id="softGlow">
+        <feGaussianBlur stdDeviation="8" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+
+    <g class="hero-back-trees" opacity=".48">
+      <path d="M0 620 C150 520 220 560 340 470 C500 350 610 490 740 390 C870 290 990 430 1110 345 C1250 245 1350 335 1440 270 L1440 900 L0 900 Z" fill="#071b15" />
+      <path d="M0 690 C170 580 300 640 450 520 C610 390 740 560 900 430 C1080 285 1250 470 1440 330 L1440 900 L0 900 Z" fill="#0b2c22" opacity=".68" />
+    </g>
+
+    <g class="hero-leaves hero-leaves-left" filter="url(#softGlow)">
+      <path d="M120 250 C260 160 390 220 458 350 C310 372 190 340 120 250 Z" fill="url(#leafGradient)" />
+      <path d="M64 420 C230 310 380 365 460 520 C292 540 160 514 64 420 Z" fill="url(#leafGradient)" opacity=".92" />
+      <path d="M180 620 C285 500 410 510 520 632 C384 702 270 704 180 620 Z" fill="url(#leafGradient)" opacity=".82" />
+      <path d="M118 250 C230 272 342 308 458 350" stroke="url(#goldStroke)" stroke-width="4" fill="none" opacity=".58" />
+      <path d="M64 420 C215 430 338 468 460 520" stroke="url(#goldStroke)" stroke-width="4" fill="none" opacity=".52" />
+    </g>
+
+    <g class="hero-leaves hero-leaves-right" filter="url(#softGlow)">
+      <path d="M1320 210 C1165 145 1048 230 1012 382 C1168 365 1288 318 1320 210 Z" fill="url(#leafGradient)" />
+      <path d="M1390 420 C1236 300 1080 350 990 500 C1160 534 1304 512 1390 420 Z" fill="url(#leafGradient)" opacity=".9" />
+      <path d="M1260 635 C1164 506 1036 510 920 625 C1048 704 1168 712 1260 635 Z" fill="url(#leafGradient)" opacity=".8" />
+      <path d="M1320 210 C1205 255 1098 310 1012 382" stroke="url(#goldStroke)" stroke-width="4" fill="none" opacity=".56" />
+      <path d="M1390 420 C1238 430 1110 462 990 500" stroke="url(#goldStroke)" stroke-width="4" fill="none" opacity=".5" />
+    </g>
+
+    <g class="hero-spa-center">
+      <ellipse cx="720" cy="668" rx="280" ry="92" fill="url(#waterGlow)" />
+      <ellipse class="hero-water-ring" cx="720" cy="665" rx="230" ry="58" fill="none" stroke="#d4af37" stroke-width="3" opacity=".55" />
+      <ellipse class="hero-water-ring ring-delay" cx="720" cy="665" rx="170" ry="38" fill="none" stroke="#1f6b52" stroke-width="4" opacity=".55" />
+      <path d="M555 665 C625 632 810 632 885 665 C810 700 630 700 555 665 Z" fill="#08120f" stroke="url(#goldStroke)" stroke-width="3" opacity=".85" />
+      <path class="hero-aura-line" d="M520 596 C620 515 817 515 918 596" fill="none" stroke="url(#goldStroke)" stroke-width="2.5" opacity=".7" />
+      <path class="hero-aura-line aura-delay" d="M570 548 C645 492 792 492 870 548" fill="none" stroke="#1f6b52" stroke-width="3" opacity=".8" />
+      <circle cx="720" cy="485" r="46" fill="#0f3d2e" stroke="url(#goldStroke)" stroke-width="5" opacity=".9" />
+      <path d="M720 425 C760 468 760 510 720 552 C680 510 680 468 720 425 Z" fill="#0b8b6b" stroke="#f2d675" stroke-width="4" opacity=".86" />
+    </g>
+  </svg>
+  <div class="container-lux grid min-h-[70vh] place-items-center text-center">
+    <div class="reveal mx-auto flex w-full max-w-5xl flex-col items-center">
+      <div class="hero-emblem-shine mb-6 w-56 max-w-[82vw] sm:w-72 lg:w-80">
+        <img src="./assets/images/beji-healing-emblem.webp" alt="Beji Healing release heal rebalance" class="w-full" />
+      </div>
+      <h1 class="w-full text-center font-display text-[clamp(2rem,4.4vw,4rem)] leading-tight lg:whitespace-nowrap">Begin Your Healing Journey</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-white/68">Experience authentic Balinese healing traditions in a sacred space.<br />Let our expert healers guide you through transformative spiritual and physical healing sessions.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a class="hero-cta-button" href="#/booking" data-route="booking">BOOK YOUR SESSION</a>
+        <a class="hero-cta-button" href="#/programs" data-route="programs">EXPLORE SERVICES</a>
+      </div>
+    </div>
+  </div>
+  <div class="container-lux relative z-10 pb-10">
+    <div class="hero-counter-card">
+      <article>
+        <strong><span data-counter data-target="15">0</span>+</strong>
+        <p>Years Expert Healers</p>
+      </article>
+      <article>
+        <strong><span data-counter data-target="1000">0</span>+</strong>
+        <p>Happy Clients</p>
+      </article>
+      <article>
+        <strong><span data-counter data-target="10">0</span>+</strong>
+        <p>Healing Services</p>
+      </article>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+<section class="space-y-5">
+  <div id="stats-root" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></div>
+  <div class="grid gap-5 xl:grid-cols-[1fr_.8fr]">
+    <article class="glass-card luxury-border p-5">
+      <p class="eyebrow">Finance Analytics</p>
+      <h1 class="font-display text-4xl mt-2">Income, expense, and reconciliation.</h1>
+      <canvas id="revenue-chart" class="mt-6 h-80 w-full"></canvas>
+    </article>
+    <article class="glass-card luxury-border p-5">
+      <p class="eyebrow">Gateway Reconciliation</p>
+      <div class="mt-5 space-y-3">
+        <div class="rounded-2xl bg-white/5 p-4"><p class="font-semibold">Midtrans Settlement</p><p class="text-white/50">IDR 82,400,000 ready to reconcile</p></div>
+        <div class="rounded-2xl bg-white/5 p-4"><p class="font-semibold">HitPay Offline Sync</p><p class="text-white/50">IDR 18,800,000 verified</p></div>
+        <div class="rounded-2xl bg-white/5 p-4"><p class="font-semibold">OttoPay QRIS</p><p class="text-white/50">IDR 12,100,000 pending settlement</p></div>
+      </div>
+      <button class="luxury-button mt-5 w-full">Export Report</button>
+    </article>
+  </div>
+  <article class="glass-card luxury-border p-5">
+    <h2 class="font-display text-3xl">Transaction Ledger</h2>
+    <div class="table-scroll mt-4">
+      <table class="lux-table">
+        <thead><tr><th>Date</th><th>Description</th><th>Channel</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody id="transaction-rows"></tbody>
+      </table>
+    </div>
+  </article>
+</section>

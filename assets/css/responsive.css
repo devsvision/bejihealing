@@ -1,0 +1,36 @@
+@media (max-width: 1023px) {
+  .dashboard-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 50;
+    width: min(84vw, 320px);
+    transform: translateX(-105%);
+    transition: transform .3s ease;
+  }
+
+  .dashboard-sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .dash-main {
+    padding: .75rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-pad {
+    padding: 4rem 1rem;
+  }
+
+  .lux-table {
+    min-width: 720px;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+  }
+}

@@ -1,0 +1,29 @@
+<section class="space-y-5">
+  <div id="stats-root" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></div>
+  <div class="grid gap-5 xl:grid-cols-[1.35fr_.75fr]">
+    <article class="glass-card luxury-border p-5">
+      <div class="flex items-center justify-between gap-4">
+        <div><p class="eyebrow">Revenue Chart</p><h2 class="font-display text-3xl mt-2">Green Gold Growth</h2></div>
+        <a class="ghost-button" href="#/finance" data-route="finance">Finance</a>
+      </div>
+      <canvas id="revenue-chart" class="mt-6 h-72 w-full"></canvas>
+    </article>
+    <article class="glass-card luxury-border p-5">
+      <p class="eyebrow">Customer Activity</p>
+      <h2 class="font-display text-3xl mt-2">Guest Signals</h2>
+      <div id="customer-activity" class="mt-5 space-y-3"></div>
+    </article>
+  </div>
+  <article class="glass-card luxury-border p-5">
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="font-display text-3xl">Recent Transactions</h2>
+      <button class="ghost-button">Export</button>
+    </div>
+    <div class="table-scroll">
+      <table class="lux-table">
+        <thead><tr><th>Date</th><th>Description</th><th>Channel</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody id="transaction-rows"></tbody>
+      </table>
+    </div>
+  </article>
+</section>

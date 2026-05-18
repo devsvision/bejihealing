@@ -1,0 +1,7 @@
+[
+  { "id": "CUS-01", "name": "Maya Santoso", "segment": "Returning guest", "lastVisit": "Arriving today", "ltv": "IDR 28.4M" },
+  { "id": "CUS-02", "name": "Elena Brooks", "segment": "VIP retreat", "lastVisit": "May 23", "ltv": "IDR 42.1M" },
+  { "id": "CUS-03", "name": "Rafi Pradana", "segment": "Corporate group", "lastVisit": "May 24", "ltv": "IDR 19.8M" },
+  { "id": "CUS-04", "name": "Aiko Tan", "segment": "Wellness member", "lastVisit": "May 25", "ltv": "IDR 33.7M" },
+  { "id": "CUS-05", "name": "Noah Wilson", "segment": "First-time guest", "lastVisit": "May 27", "ltv": "IDR 7.6M" }
+]
