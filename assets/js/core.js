@@ -2,7 +2,7 @@ export const qs = (selector, scope = document) => scope.querySelector(selector);
 export const qsa = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
 const componentCache = new Map();
-const ASSET_VERSION = "20260519-footer-v3";
+const ASSET_VERSION = "20260519-seo-v1";
 
 export async function fetchText(path) {
   if (componentCache.has(path)) return componentCache.get(path);

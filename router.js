@@ -1,4 +1,4 @@
-import { ROUTES } from "./config.js";
+import { CONFIG, ROUTES } from "./config.js";
 import { loadPage, mountLayout, qs, qsa } from "./assets/js/core.js";
 import { initBookingPage } from "./assets/js/booking.js";
 import { initDashboardPage } from "./assets/js/finance.js";
@@ -36,7 +36,7 @@ export async function renderRoute() {
     currentLayout = route.layout;
   }
 
-  document.title = `${route.title} | Beji Healing`;
+  document.title = route.seoTitle || `${route.title} | ${CONFIG.appName}`;
   await loadPage("app", route.path);
   updateActiveLinks(routeName);
   initPaymentModal();

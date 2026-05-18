@@ -1,0 +1,16 @@
+{
+  "name": "Beji Healing",
+  "short_name": "Beji Healing",
+  "description": "Begin Your Healing Journey with authentic Balinese healing rituals and wellness retreat packages.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    {
+      "src": "/assets/images/beji-healing-favicon.webp",
+      "sizes": "400x400",
+      "type": "image/webp"
+    }
+  ]
+}
