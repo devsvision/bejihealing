@@ -2,10 +2,12 @@ export const qs = (selector, scope = document) => scope.querySelector(selector);
 export const qsa = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
 const componentCache = new Map();
+const ASSET_VERSION = "20260519-footer-v3";
 
 export async function fetchText(path) {
   if (componentCache.has(path)) return componentCache.get(path);
-  const response = await fetch(path);
+  const separator = path.includes("?") ? "&" : "?";
+  const response = await fetch(`${path}${separator}v=${ASSET_VERSION}`);
   if (!response.ok) throw new Error(`Unable to load ${path}`);
   const text = await response.text();
   componentCache.set(path, text);

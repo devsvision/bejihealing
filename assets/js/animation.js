@@ -12,6 +12,7 @@ export function initAnimations() {
   initPackageServicePagination();
   initHealerPagination();
   initHealerPhotoModal();
+  initTestimonials();
 }
 
 export function initScrollAnimations() {
@@ -183,6 +184,55 @@ export function initHealerPhotoModal() {
       openSinglePhoto(photo.dataset.fullSrc || photo.src, photo.alt || "Healer photo");
     });
   });
+}
+
+export function initTestimonials() {
+  const track = document.querySelector("[data-testimonial-track]");
+  const dots = document.querySelector("[data-testimonial-dots]");
+  if (!track || !dots || track.dataset.ready === "true") return;
+  track.dataset.ready = "true";
+
+  const cards = [...track.children];
+  const perPage = () => window.innerWidth <= 640 ? 1 : window.innerWidth <= 900 ? 2 : 3;
+  let page = 0;
+  let timer = null;
+
+  const renderDots = () => {
+    const total = Math.ceil(cards.length / perPage());
+    dots.innerHTML = Array.from({ length: total }, (_, index) => `<button type="button" class="${index === page ? "is-active" : ""}" data-testimonial-page="${index}" aria-label="Show testimonial page ${index + 1}"></button>`).join("");
+  };
+
+  const render = () => {
+    const size = cards[0].getBoundingClientRect().width + 16;
+    const total = Math.ceil(cards.length / perPage());
+    page = page % total;
+    track.style.transform = `translateX(${-page * perPage() * size}px)`;
+    renderDots();
+  };
+
+  const start = () => {
+    clearInterval(timer);
+    timer = setInterval(() => {
+      page += 1;
+      render();
+    }, 3600);
+  };
+
+  dots.addEventListener("click", (event) => {
+    const dot = event.target.closest("[data-testimonial-page]");
+    if (!dot) return;
+    page = Number(dot.dataset.testimonialPage);
+    render();
+    start();
+  });
+
+  window.addEventListener("resize", () => {
+    page = 0;
+    render();
+  });
+
+  render();
+  start();
 }
 
 function openSinglePhoto(src, title) {
