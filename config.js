@@ -43,6 +43,7 @@ export const ROUTES = {
   gallery: { title: "Gallery", path: "pages/gallery.html", layout: "main" },
   blog: { title: "Journal", path: "pages/blog.html", layout: "main" },
   contact: { title: "Contact", path: "pages/contact.html", layout: "main" },
+  notFound: { title: "Page Not Found", seoTitle: "404 - Page Not Found | Beji Healing", path: "pages/404.html", layout: "main" },
   dashboard: { title: "Dashboard", path: "pages/dashboard.html", layout: "dashboard" },
   customers: { title: "Customers", path: "pages/customers.html", layout: "dashboard" },
   finance: { title: "Finance", path: "pages/finance.html", layout: "dashboard" },

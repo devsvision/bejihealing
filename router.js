@@ -19,12 +19,14 @@ let pendingSection = "";
 
 export function getRouteName() {
   const raw = location.hash.replace("#/", "").replace("#", "");
-  return ROUTES[raw] ? raw : "home";
+  if (raw) return ROUTES[raw] ? raw : "notFound";
+  const cleanPath = location.pathname.replace(/\/+$/, "") || "/";
+  return cleanPath === "/" || cleanPath.endsWith("/index.html") ? "home" : "notFound";
 }
 
 export async function navigateTo(routeName) {
-  if (!ROUTES[routeName]) routeName = "home";
-  location.hash = `#/${routeName}`;
+  if (!ROUTES[routeName]) routeName = "notFound";
+  location.hash = routeName === "notFound" ? "#/404" : `#/${routeName}`;
 }
 
 export async function renderRoute() {

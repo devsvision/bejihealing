@@ -11,6 +11,8 @@ The site is a lightweight SPA built without a frontend framework:
 - `assets/js/core.js` loads layouts, pages, and reusable HTML components with `fetch()`.
 - `layouts/main-layout.html` mounts the public navbar, page content, and footer.
 - `layouts/dashboard-layout.html` mounts the admin sidebar and dashboard pages.
+- `pages/404.html` is the in-app SPA not-found view for invalid hash routes.
+- `404.html` is the static hosting fallback for real missing URLs.
 - `components/` stores reusable UI fragments such as navbar, hero, sidebar, footer, cards, tables, and loading screen.
 - `pages/` stores route-level page HTML.
 - `assets/css/` stores global styling, animation, glassmorphism, dashboard, and responsive rules.
@@ -34,6 +36,7 @@ The current home page contains:
 - Google-style testimonials carousel with 12 sample reviews.
 - Location / Contact / Opening Hour card section.
 - Full footer with logo, intro, Quick Book links, Information links, payment gateway image, copyright grid, and social icons.
+- Branded 404 page with Beji Healing visual style, home CTA, and booking CTA.
 
 ## Admin And Business Modules
 
@@ -83,7 +86,9 @@ Implemented SEO assets:
 - `sitemap.xml`
 - `site.webmanifest`
 - Local business JSON-LD structured data in `index.html`
+- Organization and WebSite JSON-LD structured data in `index.html`
 - Open Graph and Twitter Card metadata
+- Static 404 fallback with `noindex, follow`
 
 Maintenance note: organic ranking cannot be guaranteed from code alone. To compete for rank 1, keep adding indexable landing pages or blog pages for each service, connect Google Search Console, verify Google Business Profile, gather real reviews, improve local citations, and publish original Bali healing content regularly.
 
@@ -115,6 +120,14 @@ The project is ready for static deployment:
 - Netlify: `netlify.toml`
 - Any static hosting that can serve HTML/CSS/JS and keep SPA fallbacks enabled.
 
+The app uses hash routing. Production URLs should primarily index the root canonical URL:
+
+```text
+https://www.bejihealing.com/
+```
+
+For unknown direct paths, hosting should return `404.html` with a 404 status. Netlify is configured to serve `404.html` for missing routes. Vercel can use the root `404.html` fallback automatically because broad rewrites are intentionally not used.
+
 For production SEO, update these URLs if the final domain changes:
 
 - `index.html` canonical URL
@@ -140,6 +153,8 @@ For visual changes:
 - Check desktop, tablet, and mobile widths.
 - Confirm hero, services, healer modal, gallery modal, testimonials carousel, info cards, and footer still render.
 - Confirm public route links and admin dashboard route links still work.
+- Confirm invalid hash routes such as `#/missing-page` render `pages/404.html`.
+- Confirm static missing URLs use `404.html` in deployment.
 
 ## Content Ownership
 
