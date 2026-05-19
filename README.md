@@ -1,6 +1,6 @@
 # Beji Healing
 
-Luxury spiritual wellness website and backend-ready operations interface for Beji Healing. The public website presents Balinese healing services, healers, testimonials, location/contact information, and a premium footer, while the admin-ready modules cover booking, POS, finance, inventory, payments, and dashboard workflows.
+Luxury spiritual wellness website and backend-ready operations interface for Beji Healing. The public website presents Balinese healing services, healers, testimonials, location/contact information, and a premium footer, while the admin-ready modules cover booking, front office, finance, inventory, payments, and dashboard workflows.
 
 ## Current Website Blueprint
 
@@ -16,10 +16,10 @@ The site is a lightweight SPA built without a frontend framework:
 - `components/` stores reusable UI fragments such as navbar, hero, sidebar, footer, cards, tables, and loading screen.
 - `pages/` stores route-level page HTML.
 - `assets/css/` stores global styling, animation, glassmorphism, dashboard, and responsive rules.
-- `assets/js/` stores business logic for booking, payment, POS, finance, routing helpers, state, and animation behavior.
-- `services/` contains backend-ready service abstractions for Midtrans, HitPay, OttoPay, booking, finance, and POS.
+- `assets/js/` stores business logic for booking, payment, front office, finance, routing helpers, state, and animation behavior.
+- `services/` contains backend-ready service abstractions for Midtrans, HitPay, OttoPay, booking, finance, and front office.
 - `data/` contains dummy JSON that can later be replaced by REST API responses.
-- `modules/` documents domain boundaries for booking, payment, finance, dashboard, POS, and inventory.
+- `modules/` documents domain boundaries for booking, payment, finance, dashboard, front office, and inventory.
 
 ## Public Sections
 
@@ -44,7 +44,7 @@ The dashboard-ready structure includes:
 
 - Dashboard overview pages for revenue, bookings, occupancy, recent transactions, charts, and customer activity.
 - Booking flow for program selection, dates, participants, checkout, invoice, and booking status.
-- POS flow for product grid, cart, payment method, receipt, and transaction history.
+- Front office flow for walk-in guests, service assignment, status tracking, payment follow-up, CRUD, and guest slips.
 - Finance flow for income, expense, gateway/offline transactions, reconciliation, analytics, and export readiness.
 - Payment gateway abstraction through `services/payment.service.js` and provider services.
 

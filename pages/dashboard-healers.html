@@ -1,0 +1,30 @@
+<section class="space-y-5">
+  <div class="glass-card luxury-border p-5">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <p class="eyebrow" data-i18n="healers">Healer</p>
+        <h2 class="font-display text-3xl mt-2" data-i18n="healerManagement">Manajemen Data Healer</h2>
+      </div>
+      <button class="luxury-button" type="button" data-healer-new>
+        <i data-lucide="user-plus" class="size-4"></i>
+        <span data-i18n="addHealer">Tambah Healer</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="healer-stats" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></div>
+
+  <article class="glass-card luxury-border p-5">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <p class="eyebrow" data-i18n="healerList">Daftar Healer</p>
+        <h2 class="font-display text-3xl mt-2" data-i18n="allHealers">Semua Nama Healer</h2>
+      </div>
+      <label class="min-w-[260px]">
+        <span class="sr-only">Cari healer</span>
+        <input id="healer-search" class="glass-input" type="search" placeholder="Cari nama, role, atau spesialisasi" data-i18n-placeholder="searchHealers" />
+      </label>
+    </div>
+    <div id="healer-grid" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+  </article>
+</section>

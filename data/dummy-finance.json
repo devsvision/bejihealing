@@ -11,9 +11,9 @@
     { "id": "TRX-9001", "date": "2026-05-18", "description": "Forest Reset booking", "channel": "Midtrans", "type": "income", "amount": 8400000, "status": "paid" },
     { "id": "TRX-9002", "date": "2026-05-18", "description": "Spa oil inventory", "channel": "Offline", "type": "expense", "amount": 2600000, "status": "completed" },
     { "id": "TRX-9003", "date": "2026-05-17", "description": "Moon Bath private group", "channel": "OttoPay", "type": "income", "amount": 7400000, "status": "confirmed" },
-    { "id": "TRX-9004", "date": "2026-05-17", "description": "Restaurant POS", "channel": "HitPay", "type": "income", "amount": 3180000, "status": "paid" },
+    { "id": "TRX-9004", "date": "2026-05-17", "description": "Walk-in front office service", "channel": "HitPay", "type": "income", "amount": 3180000, "status": "paid" },
     { "id": "TRX-9005", "date": "2026-05-16", "description": "Healer contractor", "channel": "Bank Transfer", "type": "expense", "amount": 5200000, "status": "completed" },
     { "id": "TRX-9006", "date": "2026-05-16", "description": "Golden Silence deposit", "channel": "Midtrans", "type": "income", "amount": 7600000, "status": "pending" },
-    { "id": "TRX-9007", "date": "2026-05-15", "description": "Boutique products", "channel": "POS Cash", "type": "income", "amount": 1850000, "status": "paid" }
+    { "id": "TRX-9007", "date": "2026-05-15", "description": "Front office cash payment", "channel": "Cash", "type": "income", "amount": 1850000, "status": "paid" }
   ]
 }

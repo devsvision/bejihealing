@@ -1,0 +1,73 @@
+<section class="space-y-5">
+  <div class="glass-card luxury-border p-5">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <p class="eyebrow" data-i18n="frontOffice">Front Office</p>
+        <h2 class="font-display text-3xl mt-2" data-i18n="walkInHandling">Penanganan Tamu Walk-in</h2>
+      </div>
+      <button class="luxury-button" type="button" data-front-office-new>
+        <i data-lucide="user-plus" class="size-4"></i>
+        <span data-i18n="addWalkIn">Tambah Walk-in</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="front-office-stats" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></div>
+
+  <div class="glass-card luxury-border p-5">
+    <div class="grid gap-3 md:grid-cols-[1fr_220px_220px]">
+      <label>
+        <span class="sr-only">Cari tamu</span>
+        <input id="front-office-search" class="glass-input" type="search" placeholder="Cari nama, telepon, service, healer" data-i18n-placeholder="searchWalkin" />
+      </label>
+      <label>
+        <span class="sr-only">Filter status</span>
+        <select id="front-office-status" class="glass-input">
+          <option value="all" data-i18n="allStatus">Semua Status</option>
+          <option value="waiting" data-i18n="waitingStatus">menunggu</option>
+          <option value="confirmed" data-i18n="confirmedStatus">terkonfirmasi</option>
+          <option value="in-progress" data-i18n="inProgressStatus">sedang dilayani</option>
+          <option value="completed" data-i18n="completedStatus">selesai</option>
+          <option value="cancelled" data-i18n="cancelledStatus">dibatalkan</option>
+        </select>
+      </label>
+      <label>
+        <span class="sr-only">Filter payment</span>
+        <select id="front-office-payment" class="glass-input">
+          <option value="all" data-i18n="allPayments">Semua Pembayaran</option>
+          <option value="unpaid" data-i18n="unpaidStatus">belum dibayar</option>
+          <option value="deposit" data-i18n="depositStatus">deposit</option>
+          <option value="paid" data-i18n="paidStatus">lunas</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <article class="glass-card luxury-border p-5">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <p class="eyebrow" data-i18n="guestQueue">Antrean Tamu</p>
+        <h2 class="font-display text-3xl mt-2" data-i18n="walkInGuestList">Daftar Tamu Walk-in</h2>
+      </div>
+      <span id="front-office-total" class="status-pill status-confirmed"></span>
+    </div>
+    <div class="table-scroll">
+      <table class="lux-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th data-i18n="guest">Tamu</th>
+            <th data-i18n="selectedService">Service Dipilih</th>
+            <th data-i18n="healer">Healer</th>
+            <th data-i18n="schedule">Jadwal</th>
+            <th data-i18n="status">Status</th>
+            <th data-i18n="payment">Pembayaran</th>
+            <th data-i18n="notes">Catatan</th>
+            <th data-i18n="action">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="front-office-rows"></tbody>
+      </table>
+    </div>
+  </article>
+</section>

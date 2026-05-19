@@ -1,13 +1,14 @@
 <section class="grid gap-5 xl:grid-cols-[.8fr_1fr]">
   <div class="glass-card luxury-border p-5">
-    <p class="eyebrow">Settings</p>
-    <h1 class="font-display text-4xl mt-2">Retreat system preferences.</h1>
-    <p class="mt-4 text-white/55">Configure gateway mode, currency display, roles, taxes, and notification defaults.</p>
+    <p class="eyebrow" data-i18n="settingsTitle">Pengaturan</p>
+    <h1 class="font-display text-4xl mt-2" data-i18n="settingsHeading">Preferensi sistem retreat.</h1>
+    <p class="mt-4 text-white/55" data-i18n="settingsDesc">Atur bahasa dashboard, mode gateway, mata uang, pajak, peran, dan notifikasi.</p>
   </div>
-  <form class="glass-card luxury-border p-5 space-y-4">
-    <label>Default Currency<input class="glass-input mt-2" value="IDR" /></label>
-    <label>Tax Rate<input class="glass-input mt-2" value="11%" /></label>
-    <label>Primary Gateway<select class="glass-input mt-2"><option>Midtrans</option><option>HitPay</option><option>OttoPay</option></select></label>
-    <button class="luxury-button" type="button">Save Settings</button>
+  <form id="settings-form" class="glass-card luxury-border p-5 space-y-4">
+    <label><span data-i18n="dashboardLanguage">Bahasa Dashboard</span><select id="dashboard-language" class="glass-input mt-2" data-language-select><option value="id" data-i18n="indonesian">Bahasa Indonesia</option><option value="en" data-i18n="english">English</option></select></label>
+    <label><span data-i18n="defaultCurrency">Mata Uang Default</span><input class="glass-input mt-2" value="IDR" /></label>
+    <label><span data-i18n="taxRate">Pajak</span><input class="glass-input mt-2" value="11%" /></label>
+    <label><span data-i18n="primaryGateway">Gateway Utama</span><select class="glass-input mt-2"><option>Midtrans</option><option>HitPay</option><option>OttoPay</option></select></label>
+    <button class="luxury-button" type="submit" data-i18n="saveSettings">Simpan Pengaturan</button>
   </form>
 </section>

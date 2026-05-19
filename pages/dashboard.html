@@ -1,27 +1,47 @@
 <section class="space-y-5">
+  <div class="glass-card luxury-border p-5">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <p class="eyebrow" data-i18n="dashboardFilter">Filter Dashboard</p>
+        <h2 class="font-display text-3xl mt-2" data-i18n="dataPerformance">Performa Data</h2>
+      </div>
+      <label class="min-w-[220px]">
+        <span class="sr-only">Filter periode dashboard</span>
+        <select id="dashboard-period" class="glass-input">
+          <option value="week" data-i18n="weekly">Mingguan</option>
+          <option value="month" data-i18n="monthly">Bulanan</option>
+          <option value="3-months" data-i18n="threeMonths">3 Bulan</option>
+          <option value="6-months" data-i18n="sixMonths">6 Bulan</option>
+          <option value="1-year" data-i18n="oneYear">1 Tahun</option>
+          <option value="2-years" data-i18n="twoYears">2 Tahun</option>
+          <option value="3-years" data-i18n="threeYears">3 Tahun</option>
+        </select>
+      </label>
+    </div>
+  </div>
   <div id="stats-root" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></div>
   <div class="grid gap-5 xl:grid-cols-[1.35fr_.75fr]">
     <article class="glass-card luxury-border p-5">
       <div class="flex items-center justify-between gap-4">
-        <div><p class="eyebrow">Revenue Chart</p><h2 class="font-display text-3xl mt-2">Green Gold Growth</h2></div>
-        <a class="ghost-button" href="#/finance" data-route="finance">Finance</a>
+        <div><p class="eyebrow" data-i18n="revenueChart">Grafik Pendapatan</p><h2 class="font-display text-3xl mt-2" data-i18n="greenGoldGrowth">Pertumbuhan Green Gold</h2></div>
+        <a class="ghost-button" href="#/finance" data-route="finance" data-i18n="finance">Keuangan</a>
       </div>
       <canvas id="revenue-chart" class="mt-6 h-72 w-full"></canvas>
     </article>
     <article class="glass-card luxury-border p-5">
-      <p class="eyebrow">Customer Activity</p>
-      <h2 class="font-display text-3xl mt-2">Guest Signals</h2>
+      <p class="eyebrow" data-i18n="customerActivity">Aktivitas Pelanggan</p>
+      <h2 class="font-display text-3xl mt-2" data-i18n="guestSignals">Aktivitas Tamu</h2>
       <div id="customer-activity" class="mt-5 space-y-3"></div>
     </article>
   </div>
   <article class="glass-card luxury-border p-5">
     <div class="mb-4 flex items-center justify-between">
-      <h2 class="font-display text-3xl">Recent Transactions</h2>
-      <button class="ghost-button">Export</button>
+      <h2 class="font-display text-3xl" data-i18n="recentTransactions">Transaksi Terbaru</h2>
+      <button class="ghost-button" data-i18n="export">Ekspor</button>
     </div>
     <div class="table-scroll">
       <table class="lux-table">
-        <thead><tr><th>Date</th><th>Description</th><th>Channel</th><th>Amount</th><th>Status</th></tr></thead>
+        <thead><tr><th data-i18n="date">Tanggal</th><th data-i18n="description">Deskripsi</th><th data-i18n="channel">Kanal</th><th data-i18n="amount">Nominal</th><th data-i18n="status">Status</th></tr></thead>
         <tbody id="transaction-rows"></tbody>
       </table>
     </div>

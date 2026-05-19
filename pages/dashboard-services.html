@@ -1,0 +1,47 @@
+<section class="space-y-5">
+  <div class="glass-card luxury-border p-5">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <p class="eyebrow" data-i18n="services">Layanan</p>
+        <h2 class="font-display text-3xl mt-2" data-i18n="serviceManagement">Manajemen Kategori dan Layanan</h2>
+      </div>
+      <button class="luxury-button" type="button" data-service-new>
+        <i data-lucide="plus" class="size-4"></i>
+        <span data-i18n="addService">Tambah Layanan</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="service-stats" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></div>
+
+  <article class="glass-card luxury-border p-5">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <p class="eyebrow" data-i18n="serviceList">Daftar Layanan</p>
+        <h2 class="font-display text-3xl mt-2" data-i18n="allServices">Semua Kategori dan Layanan</h2>
+      </div>
+      <label class="min-w-[260px]">
+        <span class="sr-only">Cari layanan</span>
+        <input id="service-search" class="glass-input" type="search" placeholder="Cari kategori atau layanan" data-i18n-placeholder="searchServices" />
+      </label>
+    </div>
+    <div class="table-scroll">
+      <table class="lux-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th data-i18n="serviceCategory">Kategori Service</th>
+            <th data-i18n="selectedService">Service Dipilih</th>
+            <th data-i18n="duration">Durasi</th>
+            <th data-i18n="capacity">Kapasitas</th>
+            <th data-i18n="price">Harga</th>
+            <th data-i18n="status">Status</th>
+            <th data-i18n="descriptionLabel">Deskripsi</th>
+            <th data-i18n="action">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="service-rows"></tbody>
+      </table>
+    </div>
+  </article>
+</section>

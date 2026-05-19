@@ -1,9 +1,10 @@
 import { qs, qsa } from "./core.js";
+import { getLanguage } from "./i18n.js";
 
 export function hydrateClock() {
   const tick = () => {
     qsa("[data-clock]").forEach((node) => {
-      node.textContent = new Intl.DateTimeFormat("en-ID", {
+      node.textContent = new Intl.DateTimeFormat(getLanguage() === "en" ? "en-US" : "id-ID", {
         weekday: "short",
         hour: "2-digit",
         minute: "2-digit",

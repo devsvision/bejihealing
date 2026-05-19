@@ -1,0 +1,38 @@
+<section class="space-y-5">
+  <div class="glass-card luxury-border p-5">
+    <p class="eyebrow" data-i18n="bookingStatus">Status Booking</p>
+    <h2 class="font-display text-3xl mt-2" data-i18n="allBookingStatus">Semua Status Booking</h2>
+  </div>
+
+  <div id="booking-status-summary" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5"></div>
+
+  <article class="glass-card luxury-border p-5">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <p class="eyebrow" data-i18n="bookingDetail">Detail Booking</p>
+        <h2 class="font-display text-3xl mt-2" data-i18n="fullBookingList">Daftar Booking Lengkap</h2>
+      </div>
+      <span id="booking-total-label" class="status-pill status-confirmed"></span>
+    </div>
+    <div class="table-scroll">
+      <table class="lux-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th data-i18n="guest">Tamu</th>
+            <th data-i18n="program">Program</th>
+            <th data-i18n="healer">Healer</th>
+            <th data-i18n="date">Tanggal</th>
+            <th data-i18n="participants">Peserta</th>
+            <th data-i18n="payment">Pembayaran</th>
+            <th data-i18n="total">Total</th>
+            <th data-i18n="status">Status</th>
+            <th data-i18n="notes">Catatan</th>
+            <th data-i18n="action">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="booking-status-rows"></tbody>
+      </table>
+    </div>
+  </article>
+</section>

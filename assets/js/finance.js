@@ -1,41 +1,69 @@
 import { api } from "./api.js";
 import { formatIDR, qs, renderList } from "./core.js";
+import { statusLabel, t } from "./i18n.js";
+
+const PERIODS = {
+  week: { labelKey: "weekly", days: 7 },
+  month: { labelKey: "monthly", months: 1 },
+  "3-months": { labelKey: "threeMonths", months: 3 },
+  "6-months": { labelKey: "sixMonths", months: 6 },
+  "1-year": { labelKey: "oneYear", months: 12 },
+  "2-years": { labelKey: "twoYears", months: 24 },
+  "3-years": { labelKey: "threeYears", months: 36 }
+};
 
 export async function initDashboardPage() {
   const statsRoot = qs("#stats-root");
   if (!statsRoot) return;
   const [bookings, finance, customers] = await Promise.all([api.bookings(), api.finance(), api.customers()]);
-  const income = finance.transactions.filter((item) => item.type === "income").reduce((sum, item) => sum + item.amount, 0);
-  const expense = finance.transactions.filter((item) => item.type === "expense").reduce((sum, item) => sum + item.amount, 0);
+  const periodSelect = qs("#dashboard-period");
 
-  renderList(statsRoot, [
-    ["Total Revenue", formatIDR(income), "+18.4%", "D"],
-    ["Net Balance", formatIDR(income - expense), "+11.2%", "B"],
-    ["Bookings Today", bookings.length, "12 arrivals", "R"],
-    ["Occupancy", "86%", "14 villas active", "O"]
-  ], ([label, value, hint, icon]) => `
-    <article class="stat-card glass-card luxury-border hover-lift">
-      <div class="flex items-center justify-between">
-        <span class="text-white/50 text-sm">${label}</span>
-        <span class="grid size-10 place-items-center rounded-full bg-gold/10 text-gold">${icon}</span>
-      </div>
-      <p class="mt-5 font-display text-3xl text-white">${value}</p>
-      <p class="mt-2 text-sm text-emerald-200">${hint}</p>
-    </article>`);
+  const renderDashboard = () => {
+    const period = periodSelect?.value || "month";
+    const filteredTransactions = filterByPeriod(finance.transactions, period, "date");
+    const filteredBookings = filterByPeriod(bookings, period, "date");
+    const income = sumTransactions(filteredTransactions, "income");
+    const expense = sumTransactions(filteredTransactions, "expense");
+    const periodLabel = t(PERIODS[period]?.labelKey || "monthly");
 
-  renderTransactions(finance.transactions);
-  renderCustomers(customers);
-  drawRevenueChart(finance.monthly);
+    renderList(statsRoot, [
+      [t("totalRevenue"), formatIDR(income), periodLabel, "D"],
+      [t("netBalance"), formatIDR(income - expense), periodLabel, "B"],
+      [t("bookings"), filteredBookings.length, periodLabel, "R"],
+      [t("occupancy"), "86%", `${filteredBookings.length} ${t("activeBookings")}`, "O"]
+    ], ([label, value, hint, icon]) => `
+      <article class="stat-card glass-card luxury-border hover-lift">
+        <div class="flex items-center justify-between">
+          <span class="text-white/50 text-sm">${label}</span>
+          <span class="grid size-10 place-items-center rounded-full bg-gold/10 text-gold">${icon}</span>
+        </div>
+        <p class="mt-5 font-display text-3xl text-white">${value}</p>
+        <p class="mt-2 text-sm text-emerald-200">${hint}</p>
+      </article>`);
+
+    renderTransactions(filteredTransactions);
+    renderCustomers(customers);
+    drawRevenueChart(buildRevenueSeries(filteredTransactions, period));
+  };
+
+  periodSelect?.addEventListener("change", renderDashboard);
+  renderDashboard();
 }
 
 function renderTransactions(transactions) {
+  if (!transactions.length) {
+    const rows = qs("#transaction-rows");
+    if (rows) rows.innerHTML = `<tr><td colspan="5" class="text-center text-white/50">${t("noTransactions")}</td></tr>`;
+    return;
+  }
+
   renderList("#transaction-rows", transactions.slice(0, 7), (item) => `
     <tr>
       <td>${item.date}</td>
       <td>${item.description}</td>
       <td>${item.channel}</td>
       <td class="${item.type === "income" ? "text-emerald-200" : "text-red-200"}">${formatIDR(item.amount)}</td>
-      <td><span class="status-pill status-${item.status}">${item.status}</span></td>
+      <td><span class="status-pill status-${item.status}">${statusLabel(item.status)}</span></td>
     </tr>`);
 }
 
@@ -50,6 +78,62 @@ function renderCustomers(customers) {
     </article>`);
 }
 
+function sumTransactions(transactions, type) {
+  return transactions
+    .filter((item) => item.type === type)
+    .reduce((sum, item) => sum + item.amount, 0);
+}
+
+function filterByPeriod(items, period, dateKey) {
+  if (!items.length) return [];
+  const referenceDate = getLatestDate(items, dateKey);
+  const startDate = getPeriodStart(period, referenceDate);
+
+  return items.filter((item) => {
+    const itemDate = parseDate(item[dateKey]);
+    return itemDate >= startDate && itemDate <= referenceDate;
+  });
+}
+
+function getLatestDate(items, dateKey) {
+  return items.reduce((latest, item) => {
+    const itemDate = parseDate(item[dateKey]);
+    return itemDate > latest ? itemDate : latest;
+  }, parseDate(items[0][dateKey]));
+}
+
+function getPeriodStart(period, referenceDate) {
+  const selected = PERIODS[period] || PERIODS.month;
+  const start = new Date(referenceDate);
+
+  if (selected.days) {
+    start.setUTCDate(start.getUTCDate() - selected.days + 1);
+    return start;
+  }
+
+  start.setUTCMonth(start.getUTCMonth() - selected.months);
+  start.setUTCDate(start.getUTCDate() + 1);
+  return start;
+}
+
+function parseDate(value) {
+  return new Date(`${value}T00:00:00Z`);
+}
+
+function buildRevenueSeries(transactions, period) {
+  const incomeTransactions = transactions.filter((item) => item.type === "income");
+  const groupByDay = period === "week" || period === "month";
+  const revenueByPeriod = incomeTransactions.reduce((groups, item) => {
+    const key = groupByDay ? item.date : item.date.slice(0, 7);
+    groups.set(key, (groups.get(key) || 0) + item.amount);
+    return groups;
+  }, new Map());
+
+  return [...revenueByPeriod.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([label, revenue]) => ({ label, revenue }));
+}
+
 function drawRevenueChart(monthly) {
   const canvas = qs("#revenue-chart");
   if (!canvas) return;
@@ -60,13 +144,22 @@ function drawRevenueChart(monthly) {
   ctx.scale(dpr, dpr);
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
-  const max = Math.max(...monthly.map((item) => item.revenue));
+  ctx.clearRect(0, 0, width, height);
+
+  if (!monthly.length) {
+    ctx.fillStyle = "rgba(245,245,245,.52)";
+    ctx.font = "14px Poppins, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(t("noRevenue"), width / 2, height / 2);
+    return;
+  }
+
+  const max = Math.max(...monthly.map((item) => item.revenue), 1);
   const points = monthly.map((item, index) => ({
-    x: 28 + index * ((width - 56) / (monthly.length - 1)),
+    x: monthly.length === 1 ? width / 2 : 28 + index * ((width - 56) / (monthly.length - 1)),
     y: height - 32 - (item.revenue / max) * (height - 68)
   }));
 
-  ctx.clearRect(0, 0, width, height);
   const gradient = ctx.createLinearGradient(0, 0, width, 0);
   gradient.addColorStop(0, "#1f6b52");
   gradient.addColorStop(1, "#d4af37");
