@@ -94,10 +94,10 @@ Maintenance note: organic ranking cannot be guaranteed from code alone. To compe
 
 ## Local Development
 
-Run with Python:
+Run with Node:
 
 ```bash
-python -m http.server 3000
+npm run dev
 ```
 
 Then open:
@@ -106,10 +106,17 @@ Then open:
 http://localhost:3000/#/home
 ```
 
-Or use npm:
+The Node server serves the SPA and exposes the OttoPay Hosted Payment endpoints:
 
-```bash
-npm run dev
+- `POST /api/payments/ottopay/create`
+- `POST /api/ottopay/callback`
+
+Create a local `.env` from `.env.example` before testing OttoPay:
+
+```text
+OTTOPAY_API_KEY=
+OTTOPAY_MERCHANT_ID=
+OTTOPAY_BASE_URL=https://dev-secure.ottopay.id/securepage-be
 ```
 
 ## Deployment

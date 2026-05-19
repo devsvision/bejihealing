@@ -1907,13 +1907,6 @@ img {
   font-family: Georgia, "Times New Roman", serif;
 }
 
-.booking-stage.is-checkout {
-  display: block;
-  min-height: auto;
-  color: #fff;
-  font-family: "Poppins", sans-serif;
-}
-
 .booking-side {
   display: grid;
   grid-template-rows: 1fr auto auto;
@@ -2809,6 +2802,12 @@ img {
   border-color: rgba(242,214,117,.95);
   color: #050505;
   background: linear-gradient(135deg, #fff2a8, #d4af37 48%, #9d7821);
+}
+
+.booking-primary:disabled {
+  cursor: progress;
+  opacity: .65;
+  transform: none;
 }
 
 .booking-calendar-toolbar select,

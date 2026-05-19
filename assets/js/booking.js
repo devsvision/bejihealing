@@ -47,6 +47,7 @@ const bookingState = {
   fullAmount: false,
   coupon: "",
   cartOpen: true,
+  paymentLoading: false,
   customer: {
     firstName: "",
     lastName: "",
@@ -75,20 +76,17 @@ export async function initBookingPage() {
   const root = qs("#booking-wizard");
   if (!root) return;
   renderBookingWizard(root);
-  root.addEventListener("click", handleBookingClick);
+  root.addEventListener("click", (event) => {
+    handleBookingClick(event).catch((error) => {
+      console.error("[booking] click handler failed", error);
+      toast(error.message || "Unable to process booking action.");
+    });
+  });
   root.addEventListener("input", handleBookingInput);
   window.lucide?.createIcons();
 }
 
 function renderBookingWizard(root) {
-  if (bookingState.step === 5) {
-    root.classList.add("is-checkout");
-    root.innerHTML = renderCheckout();
-    window.lucide?.createIcons();
-    return;
-  }
-
-  root.classList.remove("is-checkout");
   root.innerHTML = `
     <aside class="booking-side">
       <div class="booking-step-list">
@@ -114,7 +112,7 @@ function renderBookingWizard(root) {
         ${renderStepBody()}
       </div>
       <footer class="booking-panel-foot">
-        <button class="booking-primary" type="button" data-booking-continue>${bookingState.step === 4 ? "Continue" : "Continue"}</button>
+        <button class="booking-primary" type="button" data-booking-continue ${bookingState.paymentLoading ? "disabled" : ""}>${bookingState.paymentLoading ? "Processing..." : "Continue"}</button>
       </footer>
     </article>`;
   window.lucide?.createIcons();
@@ -265,72 +263,14 @@ function renderPayments() {
       <input type="checkbox" data-full-amount ${bookingState.fullAmount ? "checked" : ""} />
       <span>I want to pay full amount</span>
     </label>
-    <p class="booking-muted booking-center">You will be redirected to the payment checkout.</p>`;
-}
-
-function renderCheckout() {
-  const customer = bookingState.customer;
-  const service = programs[0];
-  const guests = totalGuests();
-  const total = service.price * guests;
-  return `
-    <main class="booking-checkout">
-      <form class="checkout-billing">
-        <h1>Billing details</h1>
-        <div class="checkout-grid">
-          ${checkoutField("firstName", "First name *", customer.firstName || "fgdg")}
-          ${checkoutField("lastName", "Last name *", customer.lastName || "asdfgafg")}
-        </div>
-        ${checkoutField("company", "Company name (optional)", "")}
-        ${checkoutSelect("country", "Country / Region *", customer.country)}
-        ${checkoutField("address", "Street address *", customer.address, "House number and street name")}
-        ${checkoutField("address2", "", "", "Apartment, suite, unit, etc. (optional)")}
-        ${checkoutField("city", "Town / City *", customer.city)}
-        ${checkoutSelect("province", "Province *", customer.province)}
-        ${checkoutField("postcode", "Postcode / ZIP *", customer.postcode)}
-        ${checkoutField("phone", "Phone *", `+62${customer.phone || "32152535"}`)}
-        ${checkoutField("email", "Email address *", customer.email || "asfaf@dfgdf.com")}
-        <label class="checkout-mini-check"><input type="checkbox" /> Create an account?</label>
-      </form>
-      <aside class="checkout-order">
-        <h2>Your order</h2>
-        <div class="checkout-order-head"><b>Product</b><b>Subtotal</b></div>
-        <div class="checkout-product">
-          <strong>Appointment x 1</strong>
-          <p>Appointment Info:</p>
-          <p>Local Time: ${formatSelectedDate(true)}<br />${shortTime()}</p>
-          <p>Client Time: (UTC+08:00) ${formatSelectedDate(true)} ${shortTime()}</p>
-          <p>service: ${service.name}</p>
-          <p>employee: ${service.healer}</p>
-          <p>Total Number of People: ${guests}</p>
-        </div>
-        <div class="checkout-line"><span>Subtotal</span><b>${formatIDR(total)}</b></div>
-        <div class="checkout-line"><span>Total</span><b>${formatIDR(total)}</b></div>
-        <div class="checkout-payment">
-          <label><input type="radio" checked /> All Supported Payment</label>
-          <p>Accept all various supported payment methods. Choose your preferred payment on the next page. Secure payment via Midtrans.</p>
-          <label><input type="radio" /> HitPay Payment Gateway</label>
-        </div>
-        <p class="checkout-privacy">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.</p>
-        <label class="checkout-terms"><input data-checkout-agree type="checkbox" /> I have read and agree to the website terms and conditions *</label>
-        <button class="checkout-place" type="button">Place order</button>
-      </aside>
-    </main>`;
+    <p class="booking-muted booking-center">Your booking payment summary is ready.</p>`;
 }
 
 function bookingInput(name, label, placeholder, value, type = "text") {
   return `<label>${label}<input data-customer="${name}" type="${type}" placeholder="${placeholder}" value="${value}" /></label>`;
 }
 
-function checkoutField(name, label, value, placeholder = "") {
-  return `<label>${label ? `<span>${label}</span>` : ""}<input data-customer="${name}" value="${value || ""}" placeholder="${placeholder}" /></label>`;
-}
-
-function checkoutSelect(name, label, value) {
-  return `<label><span>${label}</span><select data-customer="${name}"><option>${value || "Indonesia"}</option></select></label>`;
-}
-
-function handleBookingClick(event) {
+async function handleBookingClick(event) {
   const root = qs("#booking-wizard");
   if (!root) return;
   const peopleButton = event.target.closest("[data-people]");
@@ -347,7 +287,11 @@ function handleBookingClick(event) {
   if (event.target.closest("[data-booking-back]")) bookingState.step = Math.max(0, bookingState.step - 1);
   if (event.target.closest("[data-booking-continue]")) {
     if (bookingState.step === 1 && !bookingState.selectedDate) return;
-    bookingState.step = Math.min(5, bookingState.step + 1);
+    if (bookingState.step === 4) {
+      await createOttoPayPayment(root);
+      return;
+    }
+    bookingState.step = Math.min(4, bookingState.step + 1);
   }
   if (stepButton) bookingState.step = Number(stepButton.dataset.bookingStep);
   if (event.target.closest("[data-full-amount]")) bookingState.fullAmount = event.target.closest("[data-full-amount]").checked;
@@ -362,6 +306,66 @@ function handleBookingInput(event) {
   const customerKey = event.target.dataset.customer;
   if (customerKey) bookingState.customer[customerKey] = event.target.value;
   if (event.target.dataset.bookingCoupon !== undefined) bookingState.coupon = event.target.value;
+}
+
+async function createOttoPayPayment(root) {
+  validatePaymentReady();
+  bookingState.paymentLoading = true;
+  renderBookingWizard(root);
+
+  try {
+    const result = await api.createOttoPayPayment(buildOttoPayPayload());
+    if (!result.endpointUrl) {
+      throw new Error("OttoPay did not return a hosted payment URL.");
+    }
+
+    window.location.assign(result.endpointUrl);
+  } catch (error) {
+    console.error("[booking] OttoPay payment creation failed", error);
+    bookingState.paymentLoading = false;
+    renderBookingWizard(root);
+    toast(error.message || "Unable to create OttoPay payment.");
+  }
+}
+
+function buildOttoPayPayload() {
+  const service = programs[0];
+  const total = service.price * totalGuests();
+  const amount = bookingState.fullAmount ? total : total / 2;
+
+  return {
+    amount,
+    merchantName: "BEJI HEALING",
+    customerDetails: {
+      email: bookingState.customer.email.trim(),
+      firstName: bookingState.customer.firstName.trim(),
+      lastName: bookingState.customer.lastName.trim(),
+      phone: bookingState.customer.phone.trim()
+    },
+    booking: {
+      serviceId: service.id,
+      serviceName: service.name,
+      serviceCategory: service.category,
+      healer: service.healer,
+      duration: service.duration,
+      location: service.location,
+      date: bookingState.selectedDate,
+      sessionTime: bookingState.selectedTime,
+      guests: totalGuests(),
+      totalAmount: total,
+      payingNow: amount,
+      payingLater: total - amount,
+      coupon: bookingState.coupon || null
+    }
+  };
+}
+
+function validatePaymentReady() {
+  if (!bookingState.selectedDate || !bookingState.selectedTime) throw new Error("Please select a date and time before payment.");
+  if (!bookingState.customer.firstName.trim()) throw new Error("Please enter your first name.");
+  if (!bookingState.customer.lastName.trim()) throw new Error("Please enter your last name.");
+  if (!bookingState.customer.email.trim()) throw new Error("Please enter your email.");
+  if (!bookingState.customer.phone.trim()) throw new Error("Please enter your phone number.");
 }
 
 function formatSelectedDate(withYear = false) {

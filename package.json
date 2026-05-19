@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "python -m http.server 3000",
-    "start": "python -m http.server 3000"
+    "dev": "node server.js",
+    "start": "node server.js"
   },
   "engines": {
     "node": ">=20"
