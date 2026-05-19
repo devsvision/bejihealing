@@ -14,6 +14,7 @@ export function initAnimations() {
   initHealerPagination();
   initHealerPhotoModal();
   initInstagramGallery();
+  initTikTokGallery();
   initTestimonials();
 }
 
@@ -229,6 +230,54 @@ export function initInstagramGallery() {
   });
 }
 
+export function initTikTokGallery() {
+  const track = document.querySelector("[data-tiktok-track]");
+  const carousel = document.querySelector("[data-tiktok-gallery]");
+  if (!track || !carousel || track.dataset.ready === "true") return;
+  track.dataset.ready = "true";
+
+  loadTikTokGallery(track).finally(() => {
+    setupMediaCarousel(track, carousel, "[data-tiktok-prev]", "[data-tiktok-next]");
+    window.lucide?.createIcons();
+  });
+}
+
+async function loadTikTokGallery(track) {
+  try {
+    const feed = await api.tiktokFeed();
+    updateTikTokProfile(feed.profile);
+    if (feed.videos?.length) track.innerHTML = feed.videos.map(renderTikTokCard).join("");
+  } catch (error) {
+    console.warn("[tiktok] fallback gallery active", error);
+  }
+}
+
+function updateTikTokProfile(profile = {}) {
+  const username = profile.username || "beji.healing";
+  const avatar = document.querySelector("[data-tiktok-avatar]");
+  const usernameNode = document.querySelector("[data-tiktok-username]");
+  const videosNode = document.querySelector("[data-tiktok-videos]");
+  const followersNode = document.querySelector("[data-tiktok-followers]");
+  const bioNode = document.querySelector("[data-tiktok-bio]");
+  const follow = document.querySelector(".tiktok-follow");
+
+  if (avatar && profile.avatarUrl) avatar.src = profile.avatarUrl;
+  if (usernameNode) usernameNode.textContent = `@${username}`;
+  if (videosNode && profile.videoCount !== null && profile.videoCount !== undefined) videosNode.textContent = Number(profile.videoCount).toLocaleString("en-US");
+  if (followersNode && profile.followerCount !== null && profile.followerCount !== undefined) followersNode.textContent = `${Number(profile.followerCount).toLocaleString("en-US")} Followers`;
+  if (bioNode && profile.bio) bioNode.textContent = profile.bio;
+  if (follow) follow.href = profile.profileUrl || `https://www.tiktok.com/@${username}`;
+}
+
+function renderTikTokCard(video) {
+  return `
+    <a class="tiktok-card" href="${escapeAttribute(video.shareUrl)}" target="_blank" rel="noopener" aria-label="Open TikTok video">
+      <img src="${escapeAttribute(video.coverImageUrl)}" alt="${escapeAttribute(video.title || "Beji Healing TikTok video")}" loading="lazy" />
+      <span><i data-lucide="music-2"></i></span>
+      <p>${escapeHTML(video.title || video.description || "Beji Healing")}</p>
+    </a>`;
+}
+
 async function loadInstagramGallery(track) {
   try {
     const feed = await api.instagramFeed();
@@ -267,8 +316,12 @@ function renderInstagramCard(item) {
 }
 
 function setupInstagramCarousel(track, carousel) {
-  const prev = carousel.querySelector("[data-instagram-prev]");
-  const next = carousel.querySelector("[data-instagram-next]");
+  setupMediaCarousel(track, carousel, "[data-instagram-prev]", "[data-instagram-next]");
+}
+
+function setupMediaCarousel(track, carousel, prevSelector, nextSelector) {
+  const prev = carousel.querySelector(prevSelector);
+  const next = carousel.querySelector(nextSelector);
   let index = 0;
   let timer = null;
 

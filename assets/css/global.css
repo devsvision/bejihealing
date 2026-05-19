@@ -1275,18 +1275,28 @@ img {
   background: #000;
 }
 
-.instagram-gallery-heading {
+.tiktok-gallery-section {
+  background:
+    radial-gradient(circle at 12% 14%, rgba(37,244,238,.12), transparent 20rem),
+    radial-gradient(circle at 86% 18%, rgba(254,44,85,.12), transparent 20rem),
+    #000;
+}
+
+.instagram-gallery-heading,
+.tiktok-gallery-heading {
   text-align: center;
 }
 
-.instagram-gallery-heading h2 {
+.instagram-gallery-heading h2,
+.tiktok-gallery-heading h2 {
   color: #f2d675;
   font-family: "Cinzel", serif;
   font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 800;
 }
 
-.instagram-gallery-heading p {
+.instagram-gallery-heading p,
+.tiktok-gallery-heading p {
   margin-top: 1.35rem;
   color: #fff;
   font-family: Georgia, "Times New Roman", serif;
@@ -1295,7 +1305,8 @@ img {
   font-weight: 800;
 }
 
-.instagram-profile-card {
+.instagram-profile-card,
+.tiktok-profile-card {
   display: flex;
   min-height: 14rem;
   align-items: center;
@@ -1308,13 +1319,20 @@ img {
   padding: clamp(1rem, 2vw, 1.4rem);
 }
 
-.instagram-profile-main {
+.tiktok-profile-card {
+  border-color: rgba(37,244,238,.72);
+  box-shadow: 0 0 0 1px rgba(254,44,85,.28), 0 18px 64px rgba(0,0,0,.34);
+}
+
+.instagram-profile-main,
+.tiktok-profile-main {
   display: flex;
   align-items: center;
   gap: 1.2rem;
 }
 
-.instagram-profile-main img {
+.instagram-profile-main img,
+.tiktok-profile-main img {
   width: 4.5rem;
   height: 4.5rem;
   border-radius: 999px;
@@ -1322,14 +1340,24 @@ img {
   border: 1px solid rgba(242,214,117,.4);
 }
 
-.instagram-profile-main h3 {
+.tiktok-profile-main img {
+  border-color: rgba(37,244,238,.5);
+}
+
+.instagram-profile-main h3,
+.tiktok-profile-main h3 {
   color: #f2d675;
   font-family: "Cinzel", serif;
   font-size: 1.25rem;
   font-weight: 800;
 }
 
-.instagram-profile-main p {
+.tiktok-profile-main h3 {
+  color: #25f4ee;
+}
+
+.instagram-profile-main p,
+.tiktok-profile-main p {
   color: #fff;
   font-family: Georgia, "Times New Roman", serif;
   font-size: .86rem;
@@ -1337,11 +1365,17 @@ img {
   line-height: 1.45;
 }
 
-.instagram-stats span {
+.instagram-stats span,
+.tiktok-stats span {
   color: #f2d675;
 }
 
-.instagram-follow {
+.tiktok-stats span {
+  color: #25f4ee;
+}
+
+.instagram-follow,
+.tiktok-follow {
   display: inline-flex;
   min-height: 2.7rem;
   align-items: center;
@@ -1354,22 +1388,30 @@ img {
   font-weight: 800;
 }
 
-.instagram-carousel {
+.tiktok-follow {
+  background: linear-gradient(135deg, #25f4ee, #fff, #fe2c55);
+}
+
+.instagram-carousel,
+.tiktok-carousel {
   position: relative;
   margin-top: 1.6rem;
 }
 
-.instagram-viewport {
+.instagram-viewport,
+.tiktok-viewport {
   overflow: hidden;
 }
 
-.instagram-track {
+.instagram-track,
+.tiktok-track {
   display: flex;
   gap: 1rem;
   transition: transform .45s ease;
 }
 
-.instagram-card {
+.instagram-card,
+.tiktok-card {
   position: relative;
   flex: 0 0 calc((100% - 2rem) / 3);
   overflow: hidden;
@@ -1379,13 +1421,20 @@ img {
   aspect-ratio: 3 / 4;
 }
 
-.instagram-card img {
+.tiktok-card {
+  border-color: rgba(37,244,238,.78);
+  box-shadow: inset 0 0 0 1px rgba(254,44,85,.24);
+}
+
+.instagram-card img,
+.tiktok-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.instagram-card span {
+.instagram-card span,
+.tiktok-card span {
   position: absolute;
   right: .65rem;
   top: .65rem;
@@ -1398,7 +1447,37 @@ img {
   color: #fff;
 }
 
-.instagram-nav {
+.tiktok-card span {
+  background: linear-gradient(135deg, rgba(37,244,238,.88), rgba(254,44,85,.88));
+}
+
+.tiktok-card p {
+  position: absolute;
+  left: .75rem;
+  right: .75rem;
+  bottom: .75rem;
+  z-index: 1;
+  display: -webkit-box;
+  overflow: hidden;
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 800;
+  line-height: 1.35;
+  text-shadow: 0 2px 14px rgba(0,0,0,.72);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.tiktok-card::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(transparent, rgba(0,0,0,.72));
+  pointer-events: none;
+}
+
+.instagram-nav,
+.tiktok-nav {
   position: absolute;
   top: 50%;
   z-index: 2;
@@ -1412,41 +1491,54 @@ img {
   transform: translateY(-50%);
 }
 
-.instagram-nav.is-prev {
+.tiktok-nav {
+  background: linear-gradient(135deg, #25f4ee, #fff, #fe2c55);
+}
+
+.instagram-nav.is-prev,
+.tiktok-nav.is-prev {
   left: -1.1rem;
 }
 
-.instagram-nav.is-next {
+.instagram-nav.is-next,
+.tiktok-nav.is-next {
   right: -1.1rem;
 }
 
-.instagram-nav:disabled {
+.instagram-nav:disabled,
+.tiktok-nav:disabled {
   cursor: not-allowed;
   opacity: .38;
 }
 
 @media (max-width: 920px) {
-  .instagram-card {
+  .instagram-card,
+  .tiktok-card {
     flex-basis: calc((100% - 1rem) / 2);
   }
 }
 
 @media (max-width: 640px) {
   .instagram-profile-card,
-  .instagram-profile-main {
+  .instagram-profile-main,
+  .tiktok-profile-card,
+  .tiktok-profile-main {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .instagram-card {
+  .instagram-card,
+  .tiktok-card {
     flex-basis: 100%;
   }
 
-  .instagram-nav.is-prev {
+  .instagram-nav.is-prev,
+  .tiktok-nav.is-prev {
     left: .4rem;
   }
 
-  .instagram-nav.is-next {
+  .instagram-nav.is-next,
+  .tiktok-nav.is-next {
     right: .4rem;
   }
 }

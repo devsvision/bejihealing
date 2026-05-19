@@ -32,5 +32,6 @@ export const api = {
   customers: () => getJSON("data/dummy-customers.json"),
   googleReviews: () => getJSON("/api/google/reviews"),
   instagramFeed: () => getJSON("/api/instagram/feed"),
+  tiktokFeed: () => getJSON("/api/tiktok/feed"),
   createOttoPayPayment: (payload) => postJSON("/api/payments/ottopay/create", payload)
 };

@@ -5,6 +5,7 @@ import { loadEnv } from "./server/config.js";
 import { getGoogleReviews } from "./server/google-reviews.service.js";
 import { getInstagramFeed } from "./server/instagram-feed.service.js";
 import { createHostedPayment, handleCallback } from "./server/ottopay.service.js";
+import { getTikTokFeed } from "./server/tiktok-feed.service.js";
 
 loadEnv();
 
@@ -42,6 +43,9 @@ const server = createServer(async (request, response) => {
     }
     if (url.pathname === "/api/instagram/feed" && request.method === "GET") {
       return handleInstagramFeed(response);
+    }
+    if (url.pathname === "/api/tiktok/feed" && request.method === "GET") {
+      return handleTikTokFeed(response);
     }
 
     if (request.method !== "GET" && request.method !== "HEAD") {
@@ -103,6 +107,16 @@ async function handleInstagramFeed(response) {
   } catch (error) {
     console.error("[api] Instagram feed error", error);
     return sendJson(response, 500, { error: error.message || "Unable to load Instagram feed." });
+  }
+}
+
+async function handleTikTokFeed(response) {
+  try {
+    const feed = await getTikTokFeed();
+    return sendJson(response, 200, feed);
+  } catch (error) {
+    console.error("[api] TikTok feed error", error);
+    return sendJson(response, 500, { error: error.message || "Unable to load TikTok feed." });
   }
 }
 

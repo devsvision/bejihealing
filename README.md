@@ -144,8 +144,12 @@ Set the same environment variables in the production hosting dashboard before co
 - `INSTAGRAM_ACCESS_TOKEN`
 - `INSTAGRAM_BUSINESS_ACCOUNT_ID`
 - `INSTAGRAM_MEDIA_LIMIT`
+- `TIKTOK_ACCESS_TOKEN`
+- `TIKTOK_VIDEO_LIMIT`
 
 The Gallery page includes a live Instagram carousel backed by `GET /api/instagram/feed`. Use an Instagram Graph API access token and business account ID for `beji_healing`. If `INSTAGRAM_BUSINESS_ACCOUNT_ID` is omitted, the backend attempts Instagram Basic Display `/me/media` with the token. The section keeps static fallback cards until Instagram credentials are configured.
+
+The Gallery page also includes a TikTok carousel backed by `GET /api/tiktok/feed`. Use a TikTok Display API access token authorized for `beji.healing`. The section keeps static fallback cards until TikTok credentials are configured.
 
 ## Deployment
 
