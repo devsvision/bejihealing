@@ -2,6 +2,8 @@ import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { extname, join, normalize, resolve } from "node:path";
 import { loadEnv } from "./server/config.js";
+import { getGoogleReviews } from "./server/google-reviews.service.js";
+import { getInstagramFeed } from "./server/instagram-feed.service.js";
 import { createHostedPayment, handleCallback } from "./server/ottopay.service.js";
 
 loadEnv();
@@ -34,6 +36,12 @@ const server = createServer(async (request, response) => {
     }
     if (url.pathname === "/api/ottopay/callback" && request.method === "POST") {
       return handleOttoPayCallback(request, response);
+    }
+    if (url.pathname === "/api/google/reviews" && request.method === "GET") {
+      return handleGoogleReviews(response);
+    }
+    if (url.pathname === "/api/instagram/feed" && request.method === "GET") {
+      return handleInstagramFeed(response);
     }
 
     if (request.method !== "GET" && request.method !== "HEAD") {
@@ -75,6 +83,26 @@ async function handleOttoPayCallback(request, response) {
       responseCode: "00",
       responseDescription: "Success"
     });
+  }
+}
+
+async function handleGoogleReviews(response) {
+  try {
+    const reviews = await getGoogleReviews();
+    return sendJson(response, 200, reviews);
+  } catch (error) {
+    console.error("[api] Google reviews error", error);
+    return sendJson(response, 500, { error: error.message || "Unable to load Google reviews." });
+  }
+}
+
+async function handleInstagramFeed(response) {
+  try {
+    const feed = await getInstagramFeed();
+    return sendJson(response, 200, feed);
+  } catch (error) {
+    console.error("[api] Instagram feed error", error);
+    return sendJson(response, 500, { error: error.message || "Unable to load Instagram feed." });
   }
 }
 

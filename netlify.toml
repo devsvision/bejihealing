@@ -1,5 +1,26 @@
 [build]
   publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/payments/ottopay/create"
+  to = "/.netlify/functions/ottopay-create"
+  status = 200
+
+[[redirects]]
+  from = "/api/ottopay/callback"
+  to = "/.netlify/functions/ottopay-callback"
+  status = 200
+
+[[redirects]]
+  from = "/api/google/reviews"
+  to = "/.netlify/functions/google-reviews"
+  status = 200
+
+[[redirects]]
+  from = "/api/instagram/feed"
+  to = "/.netlify/functions/instagram-feed"
+  status = 200
 
 [[redirects]]
   from = "/admin"

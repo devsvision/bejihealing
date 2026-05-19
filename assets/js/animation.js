@@ -1,3 +1,4 @@
+import { api } from "./api.js";
 import { qsa } from "./core.js";
 
 export function initAnimations() {
@@ -12,6 +13,7 @@ export function initAnimations() {
   initPackageServicePagination();
   initHealerPagination();
   initHealerPhotoModal();
+  initInstagramGallery();
   initTestimonials();
 }
 
@@ -192,7 +194,129 @@ export function initTestimonials() {
   if (!track || !dots || track.dataset.ready === "true") return;
   track.dataset.ready = "true";
 
+  loadGoogleTestimonials(track, dots).catch((error) => {
+    console.warn("[testimonials] Google reviews fallback active", error);
+    setupTestimonials(track, dots);
+  });
+}
+
+async function loadGoogleTestimonials(track, dots) {
+  const data = await api.googleReviews();
+  if (!data.reviews?.length) {
+    setupTestimonials(track, dots);
+    return;
+  }
+
+  track.innerHTML = data.reviews.map(renderGoogleReviewCard).join("");
+  const ratingLabel = document.querySelector("[data-google-review-label]");
+  if (ratingLabel) {
+    const rating = data.rating ? Number(data.rating).toFixed(1).replace(/\.0$/, "") : "5";
+    const count = data.userRatingCount ? ` from ${Number(data.userRatingCount).toLocaleString("en-US")} reviews` : "";
+    ratingLabel.innerHTML = `${rating} <span>${renderStars(Math.round(data.rating || 5))}</span>${count}`;
+  }
+  setupTestimonials(track, dots);
+}
+
+export function initInstagramGallery() {
+  const track = document.querySelector("[data-instagram-track]");
+  const carousel = document.querySelector("[data-instagram-gallery]");
+  if (!track || !carousel || track.dataset.ready === "true") return;
+  track.dataset.ready = "true";
+
+  loadInstagramGallery(track).finally(() => {
+    setupInstagramCarousel(track, carousel);
+    window.lucide?.createIcons();
+  });
+}
+
+async function loadInstagramGallery(track) {
+  try {
+    const feed = await api.instagramFeed();
+    updateInstagramProfile(feed.profile);
+    if (feed.media?.length) track.innerHTML = feed.media.map(renderInstagramCard).join("");
+  } catch (error) {
+    console.warn("[instagram] fallback gallery active", error);
+  }
+}
+
+function updateInstagramProfile(profile = {}) {
+  const username = profile.username || "beji_healing";
+  const permalink = profile.permalink || `https://www.instagram.com/${username}/`;
+  const avatar = document.querySelector("[data-instagram-avatar]");
+  const usernameNode = document.querySelector("[data-instagram-username]");
+  const postsNode = document.querySelector("[data-instagram-posts]");
+  const followersNode = document.querySelector("[data-instagram-followers]");
+  const bioNode = document.querySelector("[data-instagram-bio]");
+  const follow = document.querySelector(".instagram-follow");
+
+  if (avatar && profile.profilePictureUrl) avatar.src = profile.profilePictureUrl;
+  if (usernameNode) usernameNode.textContent = `@${username}`;
+  if (postsNode && profile.mediaCount !== null && profile.mediaCount !== undefined) postsNode.textContent = Number(profile.mediaCount).toLocaleString("en-US");
+  if (followersNode && profile.followersCount !== null && profile.followersCount !== undefined) followersNode.textContent = Number(profile.followersCount).toLocaleString("en-US");
+  if (bioNode && profile.biography) bioNode.innerHTML = escapeHTML(profile.biography).replaceAll("\n", "<br />");
+  if (follow) follow.href = permalink;
+}
+
+function renderInstagramCard(item) {
+  const icon = item.isCarousel ? "gallery-horizontal" : item.mediaType === "VIDEO" ? "video" : "instagram";
+  return `
+    <a class="instagram-card" href="${escapeAttribute(item.permalink)}" target="_blank" rel="noopener" aria-label="Open Instagram post">
+      <img src="${escapeAttribute(item.mediaUrl)}" alt="${escapeAttribute(item.caption || "Beji Healing Instagram post")}" loading="lazy" />
+      <span><i data-lucide="${icon}"></i></span>
+    </a>`;
+}
+
+function setupInstagramCarousel(track, carousel) {
+  const prev = carousel.querySelector("[data-instagram-prev]");
+  const next = carousel.querySelector("[data-instagram-next]");
+  let index = 0;
+  let timer = null;
+
+  const visibleCount = () => window.innerWidth <= 640 ? 1 : window.innerWidth <= 920 ? 2 : 3;
+  const maxIndex = () => Math.max(0, track.children.length - visibleCount());
+  const render = () => {
+    index = Math.max(0, Math.min(index, maxIndex()));
+    const firstCard = track.children[0];
+    if (!firstCard) return;
+    const gap = parseFloat(getComputedStyle(track).gap || 0);
+    const offset = index * (firstCard.getBoundingClientRect().width + gap);
+    track.style.transform = `translateX(${-offset}px)`;
+    prev.disabled = index === 0;
+    next.disabled = index === maxIndex();
+  };
+  const advance = () => {
+    if (maxIndex() <= 0) return;
+    index = index >= maxIndex() ? 0 : index + 1;
+    render();
+  };
+  const start = () => {
+    clearInterval(timer);
+    timer = setInterval(advance, 3600);
+  };
+
+  prev?.addEventListener("click", () => {
+    index -= 1;
+    render();
+    start();
+  });
+  next?.addEventListener("click", () => {
+    index += 1;
+    render();
+    start();
+  });
+  carousel.addEventListener("mouseenter", () => clearInterval(timer));
+  carousel.addEventListener("mouseleave", start);
+  window.addEventListener("resize", () => {
+    render();
+    start();
+  });
+  render();
+  start();
+}
+
+function setupTestimonials(track, dots) {
   const cards = [...track.children];
+  if (!cards.length) return;
   const perPage = () => window.innerWidth <= 640 ? 1 : window.innerWidth <= 900 ? 2 : 3;
   let page = 0;
   let timer = null;
@@ -233,6 +357,39 @@ export function initTestimonials() {
 
   render();
   start();
+}
+
+function renderGoogleReviewCard(review) {
+  const photo = review.authorPhotoUrl || "./assets/images/beji-healing-favicon.webp";
+  const authorUrl = review.authorUrl ? ` href="${escapeAttribute(review.authorUrl)}" target="_blank" rel="noopener"` : "";
+  return `
+    <article class="testimonial-card">
+      <img src="${escapeAttribute(photo)}" alt="${escapeAttribute(review.authorName)}" />
+      <span class="google-mark">G</span>
+      <h3>${escapeHTML(review.authorName)} <b>✓</b></h3>
+      <p class="stars">${renderStars(review.rating)}</p>
+      <small>${escapeHTML(review.relativeTime || "Google review")}</small>
+      <p class="quote">${escapeHTML(review.text)}</p>
+      ${review.authorUrl ? `<a class="testimonial-source" ${authorUrl}>View on Google</a>` : ""}
+    </article>`;
+}
+
+function renderStars(rating) {
+  const rounded = Math.max(1, Math.min(5, Math.round(Number(rating || 5))));
+  return "★".repeat(rounded);
+}
+
+function escapeHTML(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function escapeAttribute(value) {
+  return escapeHTML(value).replaceAll("`", "&#096;");
 }
 
 function openSinglePhoto(src, title) {

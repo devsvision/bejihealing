@@ -1,7 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 
-const storePath = resolve(process.cwd(), "data", "ottopay-transactions.json");
+const storePath = process.env.OTTOPAY_TRANSACTION_STORE
+  || (process.env.VERCEL || process.env.NETLIFY ? "/tmp/ottopay-transactions.json" : resolve(process.cwd(), "data", "ottopay-transactions.json"));
 
 async function readTransactions() {
   try {

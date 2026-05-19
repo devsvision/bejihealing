@@ -8,7 +8,7 @@ import { initFrontOfficePage } from "./assets/js/front-office.js";
 import { applyI18n, t } from "./assets/js/i18n.js";
 import { initPaymentModal } from "./assets/js/payment.js";
 import { initSettingsPage } from "./assets/js/settings.js";
-import { initCounters, initHealerPagination, initHealerPhotoModal, initHeroLight, initPackageServicePagination, initRitualGallery, initRitualServicePagination, initRitualTabs, initScrollAnimations, initServiceToggle, initTestimonials, luxuryParallax } from "./assets/js/animation.js";
+import { initCounters, initHealerPagination, initHealerPhotoModal, initHeroLight, initInstagramGallery, initPackageServicePagination, initRitualGallery, initRitualServicePagination, initRitualTabs, initScrollAnimations, initServiceToggle, initTestimonials, luxuryParallax } from "./assets/js/animation.js";
 
 const pageInitializers = {
   booking: initBookingPage,
@@ -71,6 +71,7 @@ export async function renderRoute() {
   initPackageServicePagination();
   initHealerPagination();
   initHealerPhotoModal();
+  initInstagramGallery();
   initTestimonials();
   scrollToPendingSection();
 }

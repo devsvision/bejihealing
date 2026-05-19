@@ -13,7 +13,12 @@ export async function postJSON(path, payload) {
     body: JSON.stringify(payload)
   });
   const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error || `API request failed: ${path}`);
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error(`Payment API route not found. Run the Node server with npm run dev or deploy the API functions.`);
+    }
+    throw new Error(data.error || `API request failed: ${path}`);
+  }
   return data;
 }
 
@@ -25,5 +30,7 @@ export const api = {
   healers: () => getJSON("data/dummy-healers.json"),
   products: () => getJSON("data/dummy-products.json"),
   customers: () => getJSON("data/dummy-customers.json"),
+  googleReviews: () => getJSON("/api/google/reviews"),
+  instagramFeed: () => getJSON("/api/instagram/feed"),
   createOttoPayPayment: (payload) => postJSON("/api/payments/ottopay/create", payload)
 };

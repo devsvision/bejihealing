@@ -111,6 +111,20 @@ The Node server serves the SPA and exposes the OttoPay Hosted Payment endpoints:
 - `POST /api/payments/ottopay/create`
 - `POST /api/ottopay/callback`
 
+Vercel deployments include matching serverless functions under `api/`, and Netlify deployments route the same URLs to `netlify/functions/`.
+
+Google reviews on the home page are loaded live through `GET /api/google/reviews`, backed by Google Places API. Configure these values in `.env` or the hosting dashboard:
+
+```text
+GOOGLE_PLACES_API_KEY=
+GOOGLE_PLACE_ID=
+GOOGLE_PLACE_SEARCH_QUERY=Beji Healing Bali
+```
+
+`GOOGLE_PLACE_ID` is optional. If omitted, the backend uses Text Search with `GOOGLE_PLACE_SEARCH_QUERY` to find Beji Healing before loading place details and reviews. The page keeps the existing static review cards as a fallback if Google is not configured.
+
+For stable production results, set `GOOGLE_PLACE_ID` after confirming the exact Beji Healing listing.
+
 Create a local `.env` from `.env.example` before testing OttoPay:
 
 ```text
@@ -119,13 +133,27 @@ OTTOPAY_MERCHANT_ID=
 OTTOPAY_BASE_URL=https://dev-secure.ottopay.id/securepage-be
 ```
 
+Set the same environment variables in the production hosting dashboard before connecting the domain:
+
+- `OTTOPAY_API_KEY`
+- `OTTOPAY_MERCHANT_ID`
+- `OTTOPAY_BASE_URL`
+- `GOOGLE_PLACES_API_KEY`
+- `GOOGLE_PLACE_ID`
+- `GOOGLE_PLACE_SEARCH_QUERY`
+- `INSTAGRAM_ACCESS_TOKEN`
+- `INSTAGRAM_BUSINESS_ACCOUNT_ID`
+- `INSTAGRAM_MEDIA_LIMIT`
+
+The Gallery page includes a live Instagram carousel backed by `GET /api/instagram/feed`. Use an Instagram Graph API access token and business account ID for `beji_healing`. If `INSTAGRAM_BUSINESS_ACCOUNT_ID` is omitted, the backend attempts Instagram Basic Display `/me/media` with the token. The section keeps static fallback cards until Instagram credentials are configured.
+
 ## Deployment
 
-The project is ready for static deployment:
+The project is ready for deployment with backend API routes:
 
-- Vercel: `vercel.json`
-- Netlify: `netlify.toml`
-- Any static hosting that can serve HTML/CSS/JS and keep SPA fallbacks enabled.
+- Vercel: `vercel.json` plus serverless functions in `api/`
+- Netlify: `netlify.toml` plus functions in `netlify/functions/`
+- Static-only hosting can serve the UI, but OttoPay and live Google Reviews require a Node/API-capable host.
 
 The app uses hash routing. Production URLs should primarily index the root canonical URL:
 
