@@ -76,7 +76,7 @@ function renderCalendarNote(booking) {
       <div class="flex items-start justify-between gap-2">
         <div>
           <p class="text-xs font-semibold text-gold">${booking.sessionTime} - ${booking.guest}</p>
-          <p class="mt-1 text-xs text-white/70">${booking.program}</p>
+          <p class="mt-1 text-xs text-white/70">${booking.serviceType}</p>
           <p class="mt-1 text-xs text-white/50">${booking.healer}</p>
         </div>
         <span class="status-pill status-${booking.status}">${statusLabel(booking.status)}</span>

@@ -5,6 +5,10 @@
     {
       "source": "/admin",
       "destination": "/index.html"
+    },
+    {
+      "source": "/fo",
+      "destination": "/index.html"
     }
   ]
 }

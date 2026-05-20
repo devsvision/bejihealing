@@ -1,0 +1,63 @@
+<section class="space-y-5" data-users-page>
+  <article id="user-list" class="glass-card luxury-border p-5" data-user-section="user-list">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <p class="eyebrow">Daftar User</p>
+        <h2 class="font-display text-3xl mt-2">User Login</h2>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <span id="user-total-label" class="status-pill status-confirmed"></span>
+        <button class="luxury-button" type="button" data-user-add>Tambah User</button>
+      </div>
+    </div>
+
+    <div class="table-scroll mt-6">
+      <table class="lux-table">
+        <thead>
+          <tr>
+            <th>Foto</th>
+            <th>Nama</th>
+            <th>Email</th>
+            <th>No HP</th>
+            <th>Role</th>
+            <th>Dashboard</th>
+            <th>Permission</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="user-rows"></tbody>
+      </table>
+    </div>
+  </article>
+
+  <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <article id="roles" class="glass-card luxury-border hover-lift p-5" data-user-section="roles">
+      <p class="eyebrow">Access</p>
+      <h2 class="font-display text-2xl mt-3">Role & Permission</h2>
+      <div class="mt-5 grid gap-4 md:grid-cols-2">
+        <div class="rounded-2xl border border-white/10 bg-white/[.04] p-4">
+          <h3 class="font-semibold text-gold">Super Admin</h3>
+          <p class="mt-2 text-sm text-white/55">Bisa membuka semua menu di semua dashboard, termasuk Pengaturan dan pembuatan user Super Admin. Data Super Admin hanya terlihat saat Super Admin login.</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/[.04] p-4">
+          <h3 class="font-semibold text-gold">Admin</h3>
+          <p class="mt-2 text-sm text-white/55">Bisa membuka semua menu dashboard admin kecuali Pengaturan. Tidak bisa membuat user Super Admin dan tidak bisa melihat user Super Admin.</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/[.04] p-4">
+          <h3 class="font-semibold text-gold">Staff / Front Office</h3>
+          <p class="mt-2 text-sm text-white/55">Hanya bisa masuk dan membuka dashboard Front Office.</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/[.04] p-4">
+          <h3 class="font-semibold text-gold">Healer</h3>
+          <p class="mt-2 text-sm text-white/55">Hanya bisa masuk dan membuka dashboard Healer.</p>
+        </div>
+      </div>
+    </article>
+    <article id="activity-log" class="glass-card luxury-border hover-lift p-5" data-user-section="activity-log">
+      <p class="eyebrow">Audit</p>
+      <h2 class="font-display text-2xl mt-3">Activity Log</h2>
+      <p class="mt-3 text-white/55">Pantau login, perubahan data, ekspor, dan update pengaturan.</p>
+    </article>
+  </div>
+</section>

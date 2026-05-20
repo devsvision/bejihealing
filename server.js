@@ -121,7 +121,7 @@ async function handleTikTokFeed(response) {
 }
 
 async function serveStatic(pathname, response, headOnly = false) {
-  const requestedPath = pathname === "/" ? "/index.html" : decodeURIComponent(pathname);
+  const requestedPath = pathname === "/" || pathname === "/fo" ? "/index.html" : decodeURIComponent(pathname);
   const normalizedPath = normalize(requestedPath).replace(/^(\.\.[/\\])+/, "");
   const filePath = resolve(rootDir, `.${normalizedPath}`);
 

@@ -1,5 +1,5 @@
 import { api } from "./api.js";
-import { formatIDR, qs, renderList } from "./core.js";
+import { formatIDR, formatItemDuration, qs, renderList } from "./core.js";
 import { toast } from "./helper.js";
 import { statusLabel, t } from "./i18n.js";
 
@@ -427,9 +427,8 @@ export async function initDashboardBookingPage() {
         <p class="text-xs text-white/45">${booking.country}</p>
       </td>
       <td>
-        <p class="font-semibold text-white">${booking.program}</p>
+        <p class="font-semibold text-white">${booking.serviceType}</p>
         <p class="text-xs text-white/45">${booking.serviceCategory}</p>
-        <p class="text-xs text-white/45">${booking.serviceType}</p>
       </td>
       <td>
         <p class="font-semibold text-white">${booking.healer}</p>
@@ -437,7 +436,7 @@ export async function initDashboardBookingPage() {
       </td>
       <td>
         <p>${booking.date}</p>
-        <p class="text-xs text-white/45">${booking.sessionTime} - ${booking.duration}</p>
+        <p class="text-xs text-white/45">${booking.sessionTime} - ${formatItemDuration(booking)}</p>
         <p class="text-xs text-white/45">${t("created")} ${booking.createdAt}</p>
       </td>
       <td>${booking.guests} ${t("people")}</td>
@@ -482,7 +481,7 @@ function openBookingDetailModal(booking) {
           <div>
             <p class="eyebrow">${t("customerDetail")}</p>
             <h2 class="font-display text-3xl mt-2">${booking.guest}</h2>
-            <p class="mt-2 text-white/55">${booking.id} - ${booking.program} - ${booking.serviceCategory}</p>
+            <p class="mt-2 text-white/55">${booking.id} - ${booking.serviceType} - ${booking.serviceCategory}</p>
           </div>
           <div class="flex items-center gap-2">
             <button class="ghost-button !min-h-10 !w-10 !px-0" type="button" data-booking-action="print-modal" aria-label="Print booking" title="Print booking">
@@ -505,7 +504,7 @@ function openBookingDetailModal(booking) {
           ${renderDetailItem(t("bookingDate"), booking.date)}
           ${renderDetailItem(t("sessionTime"), booking.sessionTime)}
           ${renderDetailItem(t("createdDate"), booking.createdAt)}
-          ${renderDetailItem(t("duration"), booking.duration)}
+          ${renderDetailItem(t("duration"), formatItemDuration(booking))}
           ${renderDetailItem(t("location"), booking.location)}
           ${renderDetailItem(t("language"), booking.language)}
           ${renderDetailItem(t("pickup"), booking.pickup)}
@@ -558,14 +557,14 @@ function printBooking(booking) {
       </head>
       <body>
         <h1>${t("printBookingTitle")}</h1>
-        <p class="muted">${booking.id} - ${booking.program}</p>
+        <p class="muted">${booking.id} - ${booking.serviceType}</p>
         <table>
           <tr><th>${t("guestName")}</th><td>${booking.guest}</td></tr>
           <tr><th>${t("email")}</th><td>${booking.email}</td></tr>
           <tr><th>${t("phone")}</th><td>${booking.phone}</td></tr>
           <tr><th>${t("country")}</th><td>${booking.country}</td></tr>
           <tr><th>${t("bookingChannel")}</th><td>${booking.bookingChannel}</td></tr>
-          <tr><th>${t("program")}</th><td>${booking.program}</td></tr>
+          <tr><th>${t("program")}</th><td>${booking.serviceType}</td></tr>
           <tr><th>${t("serviceCategory")}</th><td>${booking.serviceCategory}</td></tr>
           <tr><th>${t("selectedService")}</th><td>${booking.serviceType}</td></tr>
           <tr><th>${t("healerName")}</th><td>${booking.healer}</td></tr>
@@ -573,7 +572,7 @@ function printBooking(booking) {
           <tr><th>${t("bookingDate")}</th><td>${booking.date}</td></tr>
           <tr><th>${t("sessionTime")}</th><td>${booking.sessionTime}</td></tr>
           <tr><th>${t("createdDate")}</th><td>${booking.createdAt}</td></tr>
-          <tr><th>${t("duration")}</th><td>${booking.duration}</td></tr>
+          <tr><th>${t("duration")}</th><td>${formatItemDuration(booking)}</td></tr>
           <tr><th>${t("location")}</th><td>${booking.location}</td></tr>
           <tr><th>${t("language")}</th><td>${booking.language}</td></tr>
           <tr><th>${t("pickup")}</th><td>${booking.pickup}</td></tr>

@@ -1,27 +1,150 @@
-<section class="space-y-5">
-  <div id="stats-root" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></div>
-  <div class="grid gap-5 xl:grid-cols-[1fr_.8fr]">
-    <article class="glass-card luxury-border p-5">
+<section class="space-y-5" data-finance-page>
+  <div id="stats-root" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" data-finance-section="finance-overview"></div>
+  <div class="grid gap-5" data-finance-section="finance-overview">
+    <article id="finance-overview" class="glass-card luxury-border p-5">
       <p class="eyebrow" data-i18n="financeAnalytics">Analitik Keuangan</p>
       <h1 class="font-display text-4xl mt-2" data-i18n="financeHeading">Pendapatan, biaya, dan rekonsiliasi.</h1>
       <canvas id="revenue-chart" class="mt-6 h-80 w-full"></canvas>
     </article>
-    <article class="glass-card luxury-border p-5">
-      <p class="eyebrow" data-i18n="gatewayReconciliation">Rekonsiliasi Gateway</p>
-      <div class="mt-5 space-y-3">
-        <div class="rounded-2xl bg-white/5 p-4"><p class="font-semibold" data-i18n="midtransSettlement">Settlement Midtrans</p><p class="text-white/50" data-i18n="midtransReady">IDR 82.400.000 siap direkonsiliasi</p></div>
-        <div class="rounded-2xl bg-white/5 p-4"><p class="font-semibold" data-i18n="hitpaySync">Sinkronisasi Offline HitPay</p><p class="text-white/50" data-i18n="hitpayVerified">IDR 18.800.000 terverifikasi</p></div>
-        <div class="rounded-2xl bg-white/5 p-4"><p class="font-semibold" data-i18n="ottopayQris">QRIS OttoPay</p><p class="text-white/50" data-i18n="ottopayPending">IDR 12.100.000 menunggu settlement</p></div>
-      </div>
-      <button class="luxury-button mt-5 w-full" data-i18n="exportReport">Ekspor Laporan</button>
-    </article>
   </div>
-  <article class="glass-card luxury-border p-5">
-    <h2 class="font-display text-3xl" data-i18n="transactionLedger">Buku Transaksi</h2>
+  <article id="transactions" class="glass-card luxury-border p-5" data-finance-section="transactions">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <p class="eyebrow">Input Transaksi</p>
+        <h2 class="font-display text-3xl mt-2" data-i18n="transactionLedger">Buku Transaksi</h2>
+      </div>
+      <span class="status-pill status-confirmed">Debit = Kredit</span>
+    </div>
+
+    <form id="transaction-form" class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <label>Tanggal Transaksi
+        <input class="glass-input mt-2" type="date" name="date" required />
+      </label>
+      <label>No. Bukti
+        <input class="glass-input mt-2" name="reference" placeholder="BK-0001" required />
+      </label>
+      <label>Jenis Transaksi
+        <select class="glass-input mt-2" name="transactionKind" required></select>
+      </label>
+      <label>Nominal
+        <input class="glass-input mt-2" type="number" min="1" step="1" name="amount" placeholder="0" required />
+      </label>
+      <label>Metode / Kanal
+        <select class="glass-input mt-2" name="channel">
+          <option>Cash</option>
+          <option>Kartu Kredit</option>
+          <option>Kartu Debit</option>
+          <option>Bank Transfer</option>
+          <option>Midtrans</option>
+          <option>HitPay</option>
+          <option>OttoPay</option>
+          <option>Offline</option>
+        </select>
+      </label>
+      <label data-cash-field>Jenis Kas
+        <select class="glass-input mt-2" name="cashBox">
+          <option>Kas Utama</option>
+          <option>Kas Kecil</option>
+          <option>Kas Front Office</option>
+          <option>Kas Operasional</option>
+        </select>
+      </label>
+      <label data-bank-field>Bank
+        <select class="glass-input mt-2" name="bankName">
+          <option>Bank BCA</option>
+          <option>Bank Mandiri</option>
+          <option>Bank BNI</option>
+          <option>Bank BRI</option>
+          <option>Bank BPD Bali</option>
+          <option>Bank Permata</option>
+          <option>CIMB Niaga</option>
+          <option>Lainnya</option>
+        </select>
+      </label>
+      <label>Status
+        <select class="glass-input mt-2" name="status">
+          <option value="completed">selesai</option>
+          <option value="paid">lunas</option>
+          <option value="pending">menunggu</option>
+          <option value="confirmed">terkonfirmasi</option>
+        </select>
+      </label>
+      <input type="hidden" name="type" />
+      <input type="hidden" name="debitAccount" />
+      <input type="hidden" name="creditAccount" />
+      <div class="rounded-2xl border border-white/10 bg-white/[.04] p-4 md:col-span-2">
+        <p class="text-xs uppercase tracking-[.18em] text-white/40">Jurnal Otomatis</p>
+        <div class="mt-3 grid gap-2 text-sm text-white/75 sm:grid-cols-2">
+          <p>Debit: <b class="text-emerald-200" data-debit-preview>-</b></p>
+          <p>Kredit: <b class="text-red-200" data-credit-preview>-</b></p>
+        </div>
+      </div>
+      <label class="md:col-span-2 xl:col-span-4">Keterangan
+        <textarea class="glass-input mt-2 min-h-[96px]" name="description" placeholder="Contoh: Pembayaran layanan Purification Ritual dari tamu walk-in" required></textarea>
+      </label>
+      <div class="md:col-span-2 xl:col-span-4 flex flex-wrap items-center justify-between gap-3">
+        <p class="text-sm text-white/50">Gunakan nominal yang sama untuk debit dan kredit sesuai aturan jurnal umum.</p>
+        <button class="luxury-button" type="submit">Simpan Transaksi</button>
+      </div>
+    </form>
+
     <div class="table-scroll mt-4">
       <table class="lux-table">
-        <thead><tr><th data-i18n="date">Tanggal</th><th data-i18n="description">Deskripsi</th><th data-i18n="channel">Kanal</th><th data-i18n="amount">Nominal</th><th data-i18n="status">Status</th></tr></thead>
+        <thead><tr><th data-i18n="date">Tanggal</th><th>No. Bukti</th><th>Pos Debit</th><th>Pos Kredit</th><th data-i18n="description">Keterangan</th><th data-i18n="channel">Kanal</th><th>Debit</th><th>Kredit</th><th data-i18n="status">Status</th></tr></thead>
         <tbody id="transaction-rows"></tbody>
+      </table>
+    </div>
+  </article>
+  <article id="invoices" class="glass-card luxury-border p-5" data-finance-section="invoices">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <p class="eyebrow">Invoice</p>
+        <h2 class="font-display text-3xl mt-2">Invoice Semua Pesanan</h2>
+      </div>
+      <span id="invoice-total-label" class="status-pill status-confirmed"></span>
+    </div>
+    <div class="table-scroll">
+      <table class="lux-table">
+        <thead>
+          <tr>
+            <th>No. Invoice</th>
+            <th>Tanggal</th>
+            <th>Tamu</th>
+            <th>Jenis Layanan</th>
+            <th>Pembayaran</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="invoice-rows"></tbody>
+      </table>
+    </div>
+  </article>
+  <article id="settlement" class="glass-card luxury-border p-5" data-finance-section="settlement">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <p class="eyebrow" data-i18n="gatewayReconciliation">Rekonsiliasi Gateway</p>
+        <h2 class="font-display text-3xl mt-2">Auto Settlement</h2>
+        <p class="mt-2 text-sm text-white/55">Data dihitung otomatis dari transaksi dan booking per gateway.</p>
+      </div>
+      <button class="luxury-button" type="button" data-gateway-sync>Sync Gateway</button>
+    </div>
+    <div id="gateway-settlement-cards" class="mt-5 grid gap-4 md:grid-cols-3"></div>
+    <div class="table-scroll mt-5">
+      <table class="lux-table">
+        <thead>
+          <tr>
+            <th>Gateway</th>
+            <th>Gross Amount</th>
+            <th>Fee Estimate</th>
+            <th>Ready to Settle</th>
+            <th>Pending</th>
+            <th>Refund</th>
+            <th>Last Sync</th>
+          </tr>
+        </thead>
+        <tbody id="gateway-settlement-rows"></tbody>
       </table>
     </div>
   </article>

@@ -1,8 +1,8 @@
 [
-  { "id": "tea", "name": "Sacred Leaf Tea", "category": "Beverage", "price": 85000, "stock": 42, "icon": "T" },
-  { "id": "oil", "name": "Temple Calm Oil", "category": "Apothecary", "price": 220000, "stock": 18, "icon": "O" },
-  { "id": "wrap", "name": "Organic Linen Wrap", "category": "Boutique", "price": 580000, "stock": 11, "icon": "L" },
-  { "id": "sound", "name": "Sound Bath Add-on", "category": "Experience", "price": 450000, "stock": 99, "icon": "S" },
-  { "id": "meal", "name": "Sattvic Lunch", "category": "Dining", "price": 175000, "stock": 30, "icon": "M" },
-  { "id": "journal", "name": "Reflection Journal", "category": "Boutique", "price": 145000, "stock": 24, "icon": "J" }
+  { "id": "tea", "name": "Sacred Leaf Tea", "category": "Beverage", "price": 85000, "stock": 42, "icon": "T", "photo": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=300&q=80" },
+  { "id": "oil", "name": "Temple Calm Oil", "category": "Apothecary", "price": 220000, "stock": 18, "icon": "O", "photo": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=300&q=80" },
+  { "id": "wrap", "name": "Organic Linen Wrap", "category": "Boutique", "price": 580000, "stock": 11, "icon": "L", "photo": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=300&q=80" },
+  { "id": "sound", "name": "Sound Bath Add-on", "category": "Experience", "price": 450000, "stock": 99, "icon": "S", "photo": "https://images.unsplash.com/photo-1519677584237-752f8853252e?auto=format&fit=crop&w=300&q=80" },
+  { "id": "meal", "name": "Sattvic Lunch", "category": "Dining", "price": 175000, "stock": 30, "icon": "M", "photo": "https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=300&q=80" },
+  { "id": "journal", "name": "Reflection Journal", "category": "Boutique", "price": 145000, "stock": 24, "icon": "J", "photo": "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=300&q=80" }
 ]

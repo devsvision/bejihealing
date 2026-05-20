@@ -10,17 +10,68 @@
     <button class="ghost-button lg:hidden !min-h-10 !px-3" data-sidebar-close aria-label="Close menu">x</button>
   </div>
   <div class="space-y-2">
-    <a class="side-link" href="#/dashboard" data-route="dashboard"><span>01</span><b class="font-normal" data-i18n="overview">Ringkasan</b></a>
-    <a class="side-link" href="#/dashboard-booking" data-route="dashboard-booking"><span>02</span><b class="font-normal" data-i18n="booking">Booking</b></a>
-    <a class="side-link" href="#/dashboard-calendar" data-route="dashboard-calendar"><span>03</span><b class="font-normal" data-i18n="calendar">Kalender</b></a>
-    <a class="side-link" href="#/dashboard-services" data-route="dashboard-services"><span>04</span><b class="font-normal" data-i18n="services">Layanan</b></a>
-    <a class="side-link" href="#/dashboard-healers" data-route="dashboard-healers"><span>05</span><b class="font-normal" data-i18n="healers">Healer</b></a>
-    <a class="side-link" href="#/front-office" data-route="front-office"><span>06</span><b class="font-normal" data-i18n="frontOffice">Front Office</b></a>
-    <a class="side-link" href="#/finance" data-route="finance"><span>07</span><b class="font-normal" data-i18n="finance">Keuangan</b></a>
-    <a class="side-link" href="#/customers" data-route="customers"><span>08</span><b class="font-normal" data-i18n="customers">Pelanggan</b></a>
-    <a class="side-link" href="#/inventory" data-route="inventory"><span>09</span><b class="font-normal" data-i18n="inventory">Inventaris</b></a>
-    <a class="side-link" href="#/reports" data-route="reports"><span>10</span><b class="font-normal" data-i18n="reports">Laporan</b></a>
-    <a class="side-link" href="#/settings" data-route="settings"><span>11</span><b class="font-normal" data-i18n="settings">Pengaturan</b></a>
+    <a class="side-link" href="#/dashboard" data-route="dashboard"><b class="font-normal">Dashboard</b></a>
+
+    <details class="sidebar-menu-group" data-sidebar-routes="dashboard-booking dashboard-calendar dashboard-services dashboard-healers">
+      <summary class="sidebar-menu-title">Operational</summary>
+      <div class="sidebar-menu-list">
+        <a class="side-link" href="#/dashboard-booking" data-route="dashboard-booking"><b class="font-normal">Pemesanan</b></a>
+        <a class="side-link" href="#/dashboard-calendar" data-route="dashboard-calendar"><b class="font-normal">Kalender</b></a>
+        <a class="side-link" href="#/dashboard-services" data-route="dashboard-services"><b class="font-normal">Layanan</b></a>
+        <a class="side-link" href="#/dashboard-healers" data-route="dashboard-healers"><b class="font-normal">Healer</b></a>
+      </div>
+    </details>
+    <details class="sidebar-menu-group" data-sidebar-routes="finance">
+      <summary class="sidebar-menu-title">Keuangan</summary>
+      <div class="sidebar-menu-list">
+        <a class="side-link" href="#/finance" data-route="finance" data-section="finance-overview"><b class="font-normal">Ringkasan Keuangan</b></a>
+        <a class="side-link" href="#/finance" data-route="finance" data-section="transactions"><b class="font-normal">Transaksi</b></a>
+        <a class="side-link" href="#/finance" data-route="finance" data-section="invoices"><b class="font-normal">Invoice</b></a>
+        <a class="side-link" href="#/finance" data-route="finance" data-section="settlement"><b class="font-normal">Settlement Gateway</b></a>
+      </div>
+    </details>
+
+    <details class="sidebar-menu-group" data-sidebar-routes="customers">
+      <summary class="sidebar-menu-title">Pelanggan</summary>
+      <div class="sidebar-menu-list">
+        <a class="side-link" href="#/customers" data-route="customers" data-section="customer-list"><b class="font-normal">Data Pelanggan</b></a>
+        <a class="side-link" href="#/customers" data-route="customers" data-section="segments"><b class="font-normal">Segmentasi</b></a>
+        <a class="side-link" href="#/customers" data-route="customers" data-section="membership"><b class="font-normal">Membership</b></a>
+        <a class="side-link" href="#/customers" data-route="customers" data-section="history"><b class="font-normal">Riwayat Kunjungan</b></a>
+        <a class="side-link" href="#/customers" data-route="customers" data-section="feedback"><b class="font-normal">Feedback & Ulasan</b></a>
+      </div>
+    </details>
+
+    <details class="sidebar-menu-group" data-sidebar-routes="reports">
+      <summary class="sidebar-menu-title">Laporan</summary>
+      <div class="sidebar-menu-list">
+        <a class="side-link" href="#/reports" data-route="reports" data-section="revenue-report"><b class="font-normal">Laporan Keuangan</b></a>
+        <a class="side-link" href="#/reports" data-route="reports" data-section="booking-report"><b class="font-normal">Laporan Booking</b></a>
+      </div>
+    </details>
+
+    <details class="sidebar-menu-group" data-sidebar-routes="users">
+      <summary class="sidebar-menu-title">User</summary>
+      <div class="sidebar-menu-list">
+        <a class="side-link" href="#/users" data-route="users" data-section="user-list"><b class="font-normal">Daftar User</b></a>
+        <a class="side-link" href="#/users" data-route="users" data-section="roles"><b class="font-normal">Role & Permission</b></a>
+        <a class="side-link" href="#/users" data-route="users" data-section="activity-log"><b class="font-normal">Activity Log</b></a>
+      </div>
+    </details>
+
+    <details class="sidebar-menu-group" data-sidebar-routes="settings">
+      <summary class="sidebar-menu-title">Pengaturan</summary>
+      <div class="sidebar-menu-list">
+        <a class="side-link" href="#/settings" data-route="settings" data-section="general"><b class="font-normal">General</b></a>
+        <a class="side-link" href="#/settings" data-route="settings" data-section="pages"><b class="font-normal">Halaman Website</b></a>
+        <a class="side-link" href="#/settings" data-route="settings" data-section="booking-settings"><b class="font-normal">Booking & Jadwal</b></a>
+        <a class="side-link" href="#/settings" data-route="settings" data-section="payments-settings"><b class="font-normal">Payment Gateway</b></a>
+        <a class="side-link" href="#/settings" data-route="settings" data-section="notification-settings"><b class="font-normal">Notifikasi</b></a>
+        <a class="side-link" href="#/settings" data-route="settings" data-section="seo-settings"><b class="font-normal">SEO & Metadata</b></a>
+        <a class="side-link" href="#/settings" data-route="settings" data-section="integration-settings"><b class="font-normal">Integrasi API</b></a>
+        <a class="side-link" href="#/settings" data-route="settings" data-section="backup-settings"><b class="font-normal">Backup & Maintenance</b></a>
+      </div>
+    </details>
   </div>
   <div class="glass-card luxury-border mt-8 p-4">
     <p class="eyebrow" data-i18n="today">Hari Ini</p>

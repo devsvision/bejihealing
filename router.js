@@ -1,13 +1,16 @@
 import { CONFIG, ROUTES } from "./config.js";
+import { canAccessRoute, getCurrentUser, routeForUser } from "./assets/js/access.js";
 import { loadPage, mountLayout, qs, qsa } from "./assets/js/core.js";
 import { initBookingPage, initDashboardBookingPage } from "./assets/js/booking.js";
 import { initDashboardCalendarPage } from "./assets/js/calendar.js";
-import { initHealersPage, initServicesPage } from "./assets/js/catalog.js";
+import { initHealersPage, initPublicHealers, initPublicServices, initServicesPage } from "./assets/js/catalog.js";
 import { initDashboardPage } from "./assets/js/finance.js";
 import { initFrontOfficePage } from "./assets/js/front-office.js";
 import { applyI18n, t } from "./assets/js/i18n.js";
 import { initPaymentModal } from "./assets/js/payment.js";
+import { initReportsPage } from "./assets/js/reports.js";
 import { initSettingsPage } from "./assets/js/settings.js";
+import { initUsersPage } from "./assets/js/users.js";
 import { initCounters, initHealerPagination, initHealerPhotoModal, initHeroLight, initInstagramGallery, initPackageServicePagination, initRitualGallery, initRitualServicePagination, initRitualTabs, initScrollAnimations, initServiceToggle, initTestimonials, initTikTokGallery, luxuryParallax } from "./assets/js/animation.js";
 
 const pageInitializers = {
@@ -20,6 +23,8 @@ const pageInitializers = {
   dashboard: initDashboardPage,
   finance: initDashboardPage,
   "front-office": initFrontOfficePage,
+  reports: initReportsPage,
+  users: initUsersPage,
   settings: initSettingsPage
 };
 
@@ -30,6 +35,7 @@ function getPathRouteName() {
   const cleanPath = location.pathname.replace(/\/+$/, "") || "/";
   if (cleanPath === "/" || cleanPath.endsWith("/index.html")) return "home";
   if (cleanPath === "/admin") return "dashboard";
+  if (cleanPath === "/fo") return "front-office";
   return "notFound";
 }
 
@@ -45,7 +51,12 @@ export async function navigateTo(routeName) {
 }
 
 export async function renderRoute() {
-  const routeName = getRouteName();
+  let routeName = getRouteName();
+  const user = getCurrentUser();
+  if (!canAccessRoute(routeName, user)) {
+    routeName = routeForUser(user);
+    location.hash = `#/${routeName}`;
+  }
   const route = ROUTES[routeName];
 
   if (currentLayout !== route.layout) {
@@ -56,10 +67,14 @@ export async function renderRoute() {
   document.title = route.seoTitle || `${route.titleKey ? t(route.titleKey) : route.title} | ${CONFIG.appName}`;
   await loadPage("app", route.path);
   applyI18n();
+  applyAccessVisibility(user);
   updateActiveLinks(routeName);
+  updateSidebarGroups(routeName);
   initPaymentModal();
   pageInitializers[routeName]?.();
   applyI18n();
+  await initPublicServices();
+  await initPublicHealers();
   initScrollAnimations();
   luxuryParallax();
   initHeroLight();
@@ -77,6 +92,22 @@ export async function renderRoute() {
   scrollToPendingSection();
 }
 
+function applyAccessVisibility(user) {
+  if (!user) return;
+  qsa("[data-route]").forEach((link) => {
+    const route = link.dataset.route;
+    if (route) link.hidden = !canAccessRoute(route, user);
+  });
+  qsa("[data-sidebar-routes]").forEach((group) => {
+    const routes = group.dataset.sidebarRoutes.split(" ");
+    group.hidden = !routes.some((route) => canAccessRoute(route, user));
+  });
+  const avatar = qs("[data-current-user-avatar]");
+  const name = qs("[data-current-user-name]");
+  if (avatar) avatar.textContent = user.name?.slice(0, 1) || "U";
+  if (name) name.textContent = user.name || "User";
+}
+
 function updateActiveLinks(routeName) {
   qsa("[data-route]").forEach((link) => {
     const sectionMatches = link.dataset.section ? link.dataset.section === pendingSection : !pendingSection;
@@ -85,14 +116,27 @@ function updateActiveLinks(routeName) {
   qs("#mobile-menu")?.classList.add("hidden");
 }
 
+function updateSidebarGroups(routeName) {
+  qsa("[data-sidebar-routes]").forEach((group) => {
+    const routes = group.dataset.sidebarRoutes.split(" ");
+    group.open = routes.includes(routeName);
+  });
+}
+
 export function initRouter() {
   window.addEventListener("hashchange", renderRoute);
+  window.addEventListener("popstate", renderRoute);
   window.addEventListener("language:change", renderRoute);
   document.addEventListener("click", (event) => {
     const trigger = event.target.closest("[data-route]");
     if (!trigger) return;
+    if (trigger.hasAttribute("data-path-route")) return;
     event.preventDefault();
     pendingSection = trigger.dataset.section || "";
+    if (trigger.dataset.route === "finance") {
+      if (pendingSection) sessionStorage.setItem("beji-active-finance-section", pendingSection);
+      else sessionStorage.removeItem("beji-active-finance-section");
+    }
     if (getRouteName() === trigger.dataset.route) {
       renderRoute();
     } else {

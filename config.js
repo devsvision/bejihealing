@@ -52,8 +52,9 @@ export const ROUTES = {
   customers: { title: "Customers", titleKey: "customers", path: "pages/customers.html", layout: "dashboard" },
   finance: { title: "Finance", titleKey: "finance", path: "pages/finance.html", layout: "dashboard" },
   reports: { title: "Reports", titleKey: "reports", path: "pages/reports.html", layout: "dashboard" },
-  "front-office": { title: "Front Office", titleKey: "frontOffice", path: "pages/front-office.html", layout: "dashboard" },
+  "front-office": { title: "Front Office", titleKey: "frontOffice", path: "pages/front-office.html", layout: "front-office" },
   inventory: { title: "Inventory", titleKey: "inventory", path: "pages/inventory.html", layout: "dashboard" },
+  users: { title: "Users", path: "pages/users.html", layout: "dashboard" },
   settings: { title: "Settings", titleKey: "settings", path: "pages/settings.html", layout: "dashboard" },
   login: { title: "Login", path: "pages/login.html", layout: "auth" }
 };

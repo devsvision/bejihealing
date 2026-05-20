@@ -1,6 +1,54 @@
 [
-  { "id": "SVC-1001", "category": "Ritual Services", "name": "Purification Ritual", "duration": "90 minutes", "price": 1250000, "capacity": "1-4 guests", "status": "active", "description": "Traditional Balinese water purification ritual for cleansing, grounding, and renewal." },
-  { "id": "SVC-1002", "category": "Ritual Services", "name": "Blessing Ceremony", "duration": "75 minutes", "price": 950000, "capacity": "1-6 guests", "status": "active", "description": "Ceremonial blessing led by a Balinese healer to invite clarity, peace, and protection." },
-  { "id": "SVC-1003", "category": "Healing Packages", "name": "Forest Reset Immersion", "duration": "3 days", "price": 4200000, "capacity": "1-8 guests", "status": "active", "description": "Forest bathing, breathwork, somatic release, herbal rituals, and integration support." },
-  { "id": "SVC-1004", "category": "Consultation", "name": "Palm Reading", "duration": "45 minutes", "price": 650000, "capacity": "1 guest", "status": "active", "description": "Spiritual consultation reading palm lines and energy patterns for personal insight." }
+  {
+    "id": "SVC-1001",
+    "category": "RITUAL SERVICE",
+    "name": "Purification Ritual",
+    "durationMinutes": 90,
+    "duration": "1 jam 30 menit",
+    "price": 1250000,
+    "unit": "/ Tamu",
+    "capacity": 4,
+    "status": "active",
+    "photos": ["https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80"],
+    "description": "Traditional Balinese water purification ritual for cleansing, grounding, and renewal."
+  },
+  {
+    "id": "SVC-1002",
+    "category": "RITUAL SERVICE",
+    "name": "Blessing Ceremony",
+    "durationMinutes": 75,
+    "duration": "1 jam 15 menit",
+    "price": 950000,
+    "unit": "/ Tamu",
+    "capacity": 6,
+    "status": "active",
+    "photos": ["https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?auto=format&fit=crop&w=900&q=80"],
+    "description": "Ceremonial blessing led by a Balinese healer to invite clarity, peace, and protection."
+  },
+  {
+    "id": "SVC-1003",
+    "category": "HEALING PACKAGES",
+    "name": "Forest Reset Immersion",
+    "durationMinutes": 180,
+    "duration": "3 jam",
+    "price": 4200000,
+    "unit": "/ Packages",
+    "capacity": 8,
+    "status": "active",
+    "photos": ["https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=900&q=80"],
+    "description": "Forest bathing, breathwork, somatic release, herbal rituals, and integration support."
+  },
+  {
+    "id": "SVC-1004",
+    "category": "RITUAL SERVICE",
+    "name": "Palm Reading",
+    "durationMinutes": 45,
+    "duration": "45 menit",
+    "price": 650000,
+    "unit": "/ Tamu",
+    "capacity": 1,
+    "status": "active",
+    "photos": ["https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=900&q=80"],
+    "description": "Spiritual consultation reading palm lines and energy patterns for personal insight."
+  }
 ]

@@ -1,14 +1,26 @@
-<section class="grid gap-5 xl:grid-cols-[.8fr_1fr]">
-  <div class="glass-card luxury-border p-5">
-    <p class="eyebrow" data-i18n="settingsTitle">Pengaturan</p>
-    <h1 class="font-display text-4xl mt-2" data-i18n="settingsHeading">Preferensi sistem retreat.</h1>
-    <p class="mt-4 text-white/55" data-i18n="settingsDesc">Atur bahasa dashboard, mode gateway, mata uang, pajak, peran, dan notifikasi.</p>
+<section class="space-y-5">
+  <div id="general" class="grid gap-5 xl:grid-cols-[.8fr_1fr]">
+    <div class="glass-card luxury-border p-5">
+      <p class="eyebrow" data-i18n="settingsTitle">Pengaturan</p>
+      <h1 class="font-display text-4xl mt-2" data-i18n="settingsHeading">Preferensi sistem retreat.</h1>
+      <p class="mt-4 text-white/55" data-i18n="settingsDesc">Atur bahasa dashboard, mode gateway, mata uang, pajak, peran, dan notifikasi.</p>
+    </div>
+    <form id="settings-form" class="glass-card luxury-border p-5 space-y-4">
+      <label><span data-i18n="dashboardLanguage">Bahasa Dashboard</span><select id="dashboard-language" class="glass-input mt-2" data-language-select><option value="id" data-i18n="indonesian">Bahasa Indonesia</option><option value="en" data-i18n="english">English</option></select></label>
+      <label><span data-i18n="defaultCurrency">Mata Uang Default</span><input class="glass-input mt-2" value="IDR" /></label>
+      <label><span data-i18n="taxRate">Pajak</span><input class="glass-input mt-2" value="11%" /></label>
+      <label><span data-i18n="primaryGateway">Gateway Utama</span><select class="glass-input mt-2"><option>Midtrans</option><option>HitPay</option><option>OttoPay</option></select></label>
+      <button class="luxury-button" type="submit" data-i18n="saveSettings">Simpan Pengaturan</button>
+    </form>
   </div>
-  <form id="settings-form" class="glass-card luxury-border p-5 space-y-4">
-    <label><span data-i18n="dashboardLanguage">Bahasa Dashboard</span><select id="dashboard-language" class="glass-input mt-2" data-language-select><option value="id" data-i18n="indonesian">Bahasa Indonesia</option><option value="en" data-i18n="english">English</option></select></label>
-    <label><span data-i18n="defaultCurrency">Mata Uang Default</span><input class="glass-input mt-2" value="IDR" /></label>
-    <label><span data-i18n="taxRate">Pajak</span><input class="glass-input mt-2" value="11%" /></label>
-    <label><span data-i18n="primaryGateway">Gateway Utama</span><select class="glass-input mt-2"><option>Midtrans</option><option>HitPay</option><option>OttoPay</option></select></label>
-    <button class="luxury-button" type="submit" data-i18n="saveSettings">Simpan Pengaturan</button>
-  </form>
+
+  <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <article id="pages" class="glass-card luxury-border hover-lift p-5"><p class="eyebrow">Website</p><h2 class="font-display text-2xl mt-3">Halaman Website</h2><p class="mt-3 text-white/55">Home, About, Programs, Gallery, Blog, Contact, SEO slug, dan konten landing page.</p></article>
+    <article id="booking-settings" class="glass-card luxury-border hover-lift p-5"><p class="eyebrow">Booking</p><h2 class="font-display text-2xl mt-3">Booking & Jadwal</h2><p class="mt-3 text-white/55">Jam operasional, durasi sesi, blackout date, kapasitas, dan aturan reschedule.</p></article>
+    <article id="payments-settings" class="glass-card luxury-border hover-lift p-5"><p class="eyebrow">Payment</p><h2 class="font-display text-2xl mt-3">Payment Gateway</h2><p class="mt-3 text-white/55">Midtrans, HitPay, OttoPay, QRIS, deposit, refund, pajak, dan settlement.</p></article>
+    <article id="notification-settings" class="glass-card luxury-border hover-lift p-5"><p class="eyebrow">Notify</p><h2 class="font-display text-2xl mt-3">Notifikasi</h2><p class="mt-3 text-white/55">Template email, WhatsApp, reminder booking, invoice, dan notifikasi internal.</p></article>
+    <article id="seo-settings" class="glass-card luxury-border hover-lift p-5"><p class="eyebrow">SEO</p><h2 class="font-display text-2xl mt-3">SEO & Metadata</h2><p class="mt-3 text-white/55">Title, description, canonical, schema, sitemap, robots, dan social preview.</p></article>
+    <article id="integration-settings" class="glass-card luxury-border hover-lift p-5"><p class="eyebrow">API</p><h2 class="font-display text-2xl mt-3">Integrasi API</h2><p class="mt-3 text-white/55">Google Reviews, Instagram, TikTok, analytics, webhook, dan API key project.</p></article>
+    <article id="backup-settings" class="glass-card luxury-border hover-lift p-5 md:col-span-2 xl:col-span-3"><p class="eyebrow">System</p><h2 class="font-display text-2xl mt-3">Backup & Maintenance</h2><p class="mt-3 text-white/55">Backup data, cache, log sistem, mode maintenance, versi aset, dan health check.</p></article>
+  </div>
 </section>
