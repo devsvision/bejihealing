@@ -72,12 +72,13 @@ export async function initDashboardPage() {
     const income = sumTransactions(filteredTransactions, "income");
     const expense = sumTransactions(filteredTransactions, "expense");
     const periodLabel = t(PERIODS[period]?.labelKey || "monthly");
+    const todayMetrics = buildTodayServiceMetrics(bookings);
 
     renderList(statsRoot, [
       [t("totalRevenue"), formatIDR(income), periodLabel, "D"],
       [t("netBalance"), formatIDR(income - expense), periodLabel, "B"],
       [t("bookings"), filteredBookings.length, periodLabel, "R"],
-      [t("occupancy"), "86%", `${filteredBookings.length} ${t("activeBookings")}`, "O"]
+      [t("todayOrders"), `${todayMetrics.orderCount} pesanan`, `${formatIDR(todayMetrics.revenue)} - ${todayMetrics.activeHealers} healer aktif melayani`, "H"]
     ], ([label, value, hint, icon]) => `
       <article class="stat-card glass-card luxury-border hover-lift">
         <div class="flex items-center justify-between">
@@ -867,6 +868,38 @@ function sumTransactions(transactions, type) {
   return transactions
     .filter((item) => item.type === type)
     .reduce((sum, item) => sum + item.amount, 0);
+}
+
+function buildTodayServiceMetrics(bookings) {
+  const today = localDateISO(new Date());
+  const todayBookings = bookings.filter((booking) => booking.date === today && isOperationalBooking(booking));
+  const revenue = todayBookings
+    .filter((booking) => isRevenueBooking(booking))
+    .reduce((sum, booking) => sum + Number(booking.amount || 0), 0);
+  const activeHealers = new Set(todayBookings.map((booking) => booking.healer).filter(Boolean)).size;
+
+  return {
+    orderCount: todayBookings.length,
+    revenue,
+    activeHealers
+  };
+}
+
+function isOperationalBooking(booking) {
+  return !["cancelled", "refunded"].includes(String(booking.status || "").toLowerCase());
+}
+
+function isRevenueBooking(booking) {
+  const status = String(booking.status || "").toLowerCase();
+  const paymentStatus = String(booking.paymentStatus || "").toLowerCase();
+  return ["paid", "confirmed", "completed"].includes(status) || /paid|deposit|lunas|settled/.test(paymentStatus);
+}
+
+function localDateISO(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function filterByPeriod(items, period, dateKey) {

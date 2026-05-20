@@ -1,11 +1,13 @@
 import { CONFIG, ROUTES } from "./config.js";
 import { canAccessRoute, getCurrentUser, routeForUser } from "./assets/js/access.js";
-import { loadPage, mountLayout, qs, qsa } from "./assets/js/core.js";
+import { api } from "./assets/js/api.js";
+import { formatIDR, loadPage, mountLayout, qs, qsa } from "./assets/js/core.js";
 import { initBookingPage, initDashboardBookingPage } from "./assets/js/booking.js";
 import { initDashboardCalendarPage } from "./assets/js/calendar.js";
 import { initHealersPage, initPublicHealers, initPublicServices, initServicesPage } from "./assets/js/catalog.js";
 import { initDashboardPage } from "./assets/js/finance.js";
 import { initFrontOfficePage } from "./assets/js/front-office.js";
+import { hydrateClock } from "./assets/js/helper.js";
 import { applyI18n, t } from "./assets/js/i18n.js";
 import { initPaymentModal } from "./assets/js/payment.js";
 import { initReportsPage } from "./assets/js/reports.js";
@@ -67,7 +69,9 @@ export async function renderRoute() {
   document.title = route.seoTitle || `${route.titleKey ? t(route.titleKey) : route.title} | ${CONFIG.appName}`;
   await loadPage("app", route.path);
   applyI18n();
+  hydrateClock();
   applyAccessVisibility(user);
+  updateSidebarTodayMetrics();
   updateActiveLinks(routeName);
   updateSidebarGroups(routeName);
   initPaymentModal();
@@ -106,6 +110,44 @@ function applyAccessVisibility(user) {
   const name = qs("[data-current-user-name]");
   if (avatar) avatar.textContent = user.name?.slice(0, 1) || "U";
   if (name) name.textContent = user.name || "User";
+}
+
+async function updateSidebarTodayMetrics() {
+  const ordersNode = qs("[data-sidebar-today-orders]");
+  const summaryNode = qs("[data-sidebar-today-summary]");
+  if (!ordersNode || !summaryNode) return;
+
+  try {
+    const bookings = await api.bookings();
+    const today = localDateISO(new Date());
+    const todayBookings = bookings.filter((booking) => booking.date === today && isOperationalBooking(booking));
+    const revenue = todayBookings
+      .filter((booking) => isRevenueBooking(booking))
+      .reduce((sum, booking) => sum + Number(booking.amount || 0), 0);
+    const activeHealers = new Set(todayBookings.map((booking) => booking.healer).filter(Boolean)).size;
+
+    ordersNode.textContent = `${todayBookings.length} pesanan`;
+    summaryNode.textContent = `${formatIDR(revenue)} - ${activeHealers} healer aktif melayani`;
+  } catch (error) {
+    console.error("[sidebar] today metrics failed", error);
+  }
+}
+
+function isOperationalBooking(booking) {
+  return !["cancelled", "refunded"].includes(String(booking.status || "").toLowerCase());
+}
+
+function isRevenueBooking(booking) {
+  const status = String(booking.status || "").toLowerCase();
+  const paymentStatus = String(booking.paymentStatus || "").toLowerCase();
+  return ["paid", "confirmed", "completed"].includes(status) || /paid|deposit|lunas|settled/.test(paymentStatus);
+}
+
+function localDateISO(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function updateActiveLinks(routeName) {

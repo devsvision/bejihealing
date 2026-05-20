@@ -1,19 +1,32 @@
 import { qs, qsa } from "./core.js";
 import { getLanguage } from "./i18n.js";
 
+let clockInterval = null;
+let clockObserver = null;
+
 export function hydrateClock() {
   const tick = () => {
+    const formattedTime = new Intl.DateTimeFormat(getLanguage() === "en" ? "en-US" : "id-ID", {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZone: "Asia/Makassar"
+    }).format(new Date());
+
     qsa("[data-clock]").forEach((node) => {
-      node.textContent = new Intl.DateTimeFormat(getLanguage() === "en" ? "en-US" : "id-ID", {
-        weekday: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-        timeZone: "Asia/Makassar"
-      }).format(new Date());
+      if (node.textContent !== formattedTime) node.textContent = formattedTime;
     });
   };
   tick();
-  setInterval(tick, 30_000);
+  if (!clockInterval) clockInterval = setInterval(tick, 1_000);
+  if (!clockObserver && "MutationObserver" in window) {
+    clockObserver = new MutationObserver(tick);
+    clockObserver.observe(document.body, { childList: true, subtree: true });
+  }
 }
 
 export function toast(message) {

@@ -4,6 +4,7 @@ import { toast } from "./helper.js";
 import { statusLabel, t } from "./i18n.js";
 
 let walkIns = [];
+const WALKIN_STORAGE_KEY = "beji-front-office-walkins";
 
 const emptyGuest = {
   id: "",
@@ -30,17 +31,21 @@ export async function initFrontOfficePage() {
   const rows = qs("#front-office-rows");
   if (!rows) return;
 
-  walkIns = await api.walkIns();
+  walkIns = loadWalkIns(await api.walkIns());
   bindFrontOfficeEvents();
   renderFrontOffice();
 }
 
 function bindFrontOfficeEvents() {
+  const rows = qs("#front-office-rows");
+  if (rows?.dataset.bound === "true") return;
+  if (rows) rows.dataset.bound = "true";
   qs("[data-front-office-new]")?.addEventListener("click", () => openGuestModal());
   qs("#front-office-search")?.addEventListener("input", renderFrontOffice);
   qs("#front-office-status")?.addEventListener("change", renderFrontOffice);
   qs("#front-office-payment")?.addEventListener("change", renderFrontOffice);
-  qs("#front-office-rows")?.addEventListener("click", handleTableAction);
+  rows?.addEventListener("click", handleTableAction);
+  rows?.addEventListener("change", handleTableAction);
 }
 
 function renderFrontOffice() {
@@ -139,6 +144,7 @@ function handleTableAction(event) {
   if (statusSelect) {
     const guest = findGuest(statusSelect.dataset.id);
     if (guest) guest.status = statusSelect.value;
+    saveWalkIns();
     renderFrontOffice();
     toast(t("frontOfficeUpdated"));
     return;
@@ -263,6 +269,7 @@ function saveGuest(formData, isEdit) {
     walkIns = [guest, ...walkIns];
   }
 
+  saveWalkIns();
   closeModal();
   renderFrontOffice();
   toast(t("frontOfficeSaved"));
@@ -274,6 +281,7 @@ function deleteGuest(id) {
   const confirmed = window.confirm(`${t("deleteWalkInConfirm")} ${guest.guest}?`);
   if (!confirmed) return;
   walkIns = walkIns.filter((item) => item.id !== id);
+  saveWalkIns();
   renderFrontOffice();
   toast(t("frontOfficeDeleted"));
 }
@@ -359,11 +367,28 @@ function findGuest(id) {
 }
 
 function nextGuestId() {
-  const nextNumber = walkIns.length + 2401;
+  const lastNumber = walkIns
+    .map((guest) => Number(String(guest.id || "").replace(/\D/g, "")))
+    .filter(Boolean)
+    .sort((a, b) => b - a)[0] || 2400;
+  const nextNumber = lastNumber + 1;
   return `WI-${nextNumber}`;
 }
 
 function closeModal() {
   const modal = qs("#modal-root");
   if (modal) modal.innerHTML = "";
+}
+
+function loadWalkIns(defaultWalkIns) {
+  try {
+    const stored = JSON.parse(localStorage.getItem(WALKIN_STORAGE_KEY) || "null");
+    return Array.isArray(stored) ? stored : defaultWalkIns;
+  } catch {
+    return defaultWalkIns;
+  }
+}
+
+function saveWalkIns() {
+  localStorage.setItem(WALKIN_STORAGE_KEY, JSON.stringify(walkIns));
 }

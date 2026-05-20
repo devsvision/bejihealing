@@ -9,7 +9,7 @@ export const ROLE_RULES = {
   },
   Admin: {
     homeRoute: "dashboard",
-    allowedRoutes: ["dashboard", "dashboard-booking", "dashboard-calendar", "dashboard-services", "dashboard-healers", "customers", "finance", "reports", "users"],
+    allowedRoutes: ["dashboard", "dashboard-booking", "dashboard-calendar", "dashboard-services", "dashboard-healers", "customers", "finance", "reports", "users", "front-office"],
     canCreateSuperAdmin: false
   },
   Finance: {
